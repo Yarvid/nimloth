@@ -1,0 +1,39 @@
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: #113E21;
+    color: white;
+    border-radius: 5px;
+    font-family: 'Montserrat' sans-serif;
+  }
+  
+  .navbar-left {
+    display: flex;
+    align-items: center;
+  }
+  
+  .navbar-right {
+    display: flex;
+    align-items: center;
+  }
+  
+  .user-account,
+  .settings {
+    margin-left: 10px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .user-account span {
+    margin-left: 5px;
+  }
+  
+  .material-symbols-outlined {
+    font-variation-settings:
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 48
+}
