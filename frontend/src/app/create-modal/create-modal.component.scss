@@ -1,0 +1,89 @@
+.modal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0,0,0,0.5);
+    
+    .modal-content {
+      width: 800px;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  
+      form {
+        h2 {
+          margin-bottom: 20px;
+          text-align: center;
+          color: #333;
+        }
+
+        .row {
+          display: flex;
+          justify-content: space-between;
+            
+          .form-group {
+            flex: 1;
+            padding-right: 10px;
+          
+            &:not(:last-child) {
+              margin-right: 20px;
+            }
+          }
+        }
+        
+        .form-group {
+          margin-bottom: 15px;
+          margin-right: 20px;
+  
+          label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 14px;
+            color: #555;
+          }
+  
+          input, select {
+            width: 100%;
+            padding: 10px;
+            font-size: 14px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+  
+            &:focus {
+              border-color: #007bff;
+              outline: none;
+              box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+            }
+          }
+        }
+  
+        button {
+          width: 100%;
+          padding: 10px;
+          font-size: 16px;
+          color: #fff;
+          background-color: #007bff;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+          transition: background-color 0.2s ease;
+  
+          &:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+          }
+  
+          &:not(:disabled):hover {
+            background-color: #0056b3;
+          }
+        }
+      }
+    }
+  }
+  

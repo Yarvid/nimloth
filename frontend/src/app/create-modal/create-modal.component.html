@@ -3,46 +3,73 @@
         <form #personForm="ngForm" (ngSubmit)="onSubmit(personForm)">
             <h2>Create New Person</h2>
 
-            <div class="form-group">
-                <label for="firstName">First Name</label>
-                <input type="text" id="firstName" name="firstName" ngModel required>
+            <div class="row">
+                <div class="form-group">
+                    <label for="firstName">Vorname</label>
+                    <input type="text" id="firstName" name="firstName" ngModel required>
+                </div>
+
+                <div class="form-group">
+                    <label for="middleName">Zwischenname</label>
+                    <input type="text" id="middleName" name="middleName" ngModel required>
+                </div>
+    
+                <div class="form-group">
+                    <label for="lastName">Nachname</label>
+                    <input type="text" id="lastName" name="lastName" ngModel required>
+                </div>
+                <div class="form-group">
+                    <label for="birthName">Geburtsname</label>
+                    <input type="text" id="birthName" name="birthName" ngModel required>
+                </div>
             </div>
 
-            <div class="form-group">
-                <label for="lastName">Last Name</label>
-                <input type="text" id="lastName" name="lastName" ngModel required>
+            <div class="row">
+                <div class="form-group">
+                    <label for="dob">Date of Birth</label>
+                    <input type="date" id="dob" name="dob" ngModel required>
+                </div>
+    
+                <div class="form-group">
+                    <label for="pob">Place of Birth</label>
+                    <input type="text" id="pob" name="pob" ngModel required>
+                </div>
             </div>
 
-            <div class="form-group">
-                <label for="dob">Date of Birth</label>
-                <input type="date" id="dob" name="dob" ngModel required>
+            <div class="row">
+                <div class="form-group">
+                    <label for="dod">Date of Death</label>
+                    <input type="date" id="dod" name="dod" ngModel required>
+                </div>
+    
+                <div class="form-group">
+                    <label for="pod">Place of Death</label>
+                    <input type="text" id="pod" name="pod" ngModel required>
+                </div>
             </div>
 
-            <div class="form-group">
-                <label for="pob">Place of Birth</label>
-                <input type="text" id="pob" name="pob" ngModel required>
-            </div>
+            <div class="row">
+                <div class="form-group">
+                    <label for="mother">Mother</label>
+                    <select id="mother" name="mother" ngModel required>
+                        <option value="">--Please choose an option--</option>
+                        <!-- Populate this with data from the backend -->
+                        <option value="1">Mother 1</option>
+                        <option value="2">Mother 2</option>
+                        <option value="3">Mother 3</option>
+                    </select>
+                </div>
 
-            <div class="form-group">
-                <label for="mother">Mother</label>
-                <select id="mother" name="mother" ngModel required>
-                    <option value="">--Please choose an option--</option>
-                    <!-- Populate this with data from the backend -->
-                    <option value="1">Mother 1</option>
-                    <option value="2">Mother 2</option>
-                    <option value="3">Mother 3</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label for="father">Father</label>
-                <select id="father" name="father" ngModel required>
-                    <option value="">--Please choose an option--</option>
-                    <!-- Populate this with data from the backend -->
-                    <option value="1">Father 1</option>
-                    <option value="2">Father 2</option>
-                    <option value="3">Father 3</option>
-                </select>
+                <div class="form-group">
+                    <label for="father">Father</label>
+                    <select id="father" name="father" ngModel required>
+                        <option value="">--Please choose an option--</option>
+                        <!-- Populate this with data from the backend -->
+                        <option value="1">Father 1</option>
+                        <option value="2">Father 2</option>
+                        <option value="3">Father 3</option>
+                    </select>
+                </div>
             </div>
 
             <button type="submit" [disabled]="!personForm.valid">Create Person</button>
