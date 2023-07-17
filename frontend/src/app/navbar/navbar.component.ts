@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { CreateModalComponent } from '../create-modal/create-modal.component';
 
 @Component({
   selector: 'app-navbar',
@@ -7,9 +9,9 @@ import { Component } from '@angular/core';
 })
 export class NavbarComponent {
   
-  constructor() { }
+  constructor(public dialog: MatDialog) { }
 
   openModal(): void {
-    
+    this.dialog.open(CreateModalComponent);
   }
 }

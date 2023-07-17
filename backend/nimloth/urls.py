@@ -16,7 +16,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from persons.views import PersonCreateView, get_csrf_token
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api/person/', PersonCreateView.post),
+    path('api/get-csrf-token/', get_csrf_token),
 ]
