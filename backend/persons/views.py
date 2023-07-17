@@ -4,8 +4,10 @@ from rest_framework.response import Response
 from .serializers import PersonSerializer
 from django.middleware.csrf import get_token
 from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 
 class PersonCreateView(APIView):
+    @csrf_exempt
     def post(self, request, format=None):
         serializer = PersonSerializer(data=request.data)
         if serializer.is_valid():

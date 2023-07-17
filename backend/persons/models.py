@@ -2,18 +2,18 @@ from django.db import models
 
 class Person(models.Model):
     # --- Names ---
-    first_name = models.CharField(max_length=50)
-    middle_name = models.CharField(max_length=50)
-    last_name = models.CharField(max_length=50)
-    birth_name = models.CharField(max_length=50)
-    artist_name = models.CharField(max_length=50)
+    first_name = models.CharField(max_length=50, blank=True)
+    middle_name = models.CharField(max_length=50, blank=True)
+    last_name = models.CharField(max_length=50, blank=True)
+    birth_name = models.CharField(max_length=50, blank=True)
+    artist_name = models.CharField(max_length=50, blank=True)
     # --- Birth --- 
-    date_of_birth = models.DateField()
-    place_of_birth = models.CharField(max_length=100)
+    date_of_birth = models.DateField(null=True)
+    place_of_birth = models.CharField(max_length=100, blank=True)
     # --- Death --- 
-    date_of_death = models.DateField()
-    place_of_death = models.CharField(max_length=100)
-    cause_of_death = models.CharField(max_length=100)
+    date_of_death = models.DateField(null=True)
+    place_of_death = models.CharField(max_length=100, blank=True)
+    cause_of_death = models.CharField(max_length=100, blank=True)
     # --- Relationship ---
     mother = models.ForeignKey(
         'self',
@@ -40,8 +40,8 @@ class Person(models.Model):
     ],
         default='U')
     # --- Modifictation log ---
-    created_on = models.DateField(auto_now_add=True)
-    modified_on = models.DateField(auto_now=True)
+    created_on = models.DateField(auto_now_add=True, null=True)
+    modified_on = models.DateField(auto_now=True, null=True)
     created_by = models.ForeignKey(
         'self',
         models.SET_NULL,
@@ -49,7 +49,7 @@ class Person(models.Model):
         null=True,
         related_name='created_persons',
     )
-    modified_by = created_by = models.ForeignKey(
+    modified_by = models.ForeignKey(
         'self',
         models.SET_NULL,
         blank=True,

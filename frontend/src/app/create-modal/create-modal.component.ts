@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { NgForm } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
@@ -15,22 +15,20 @@ export class CreateModalComponent {
 
   person: any = {}; // Object to store the person data
 
-  ngOnInit() {
-    this.http.get('http://localhost:8000/api/get-csrf-token/', { withCredentials: true}).subscribe();
-  }
-
   onSubmit(form: NgForm) {
     if (form.invalid) {
         return;
     }
 
     const newPerson = {
-        firstName: form.value.firstName,
-        lastName: form.value.lastName,
-        dob: form.value.dob,
-        pob: form.value.pob,
-        mother: form.value.mother,
-        father: form.value.father
+      first_name: form.value.firstName,
+      middle_name: form.value.middleName,
+      last_name: form.value.lastName,
+      birth_name: form.value.birthName,
+      date_of_birth: form.value.dob,
+      place_of_birth: form.value.pob,
+      mother: form.value.mother,
+      father: form.value.father
     };
 
     const csrftoken = Cookies.get('csrftoken');

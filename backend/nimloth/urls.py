@@ -17,9 +17,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from persons.views import PersonCreateView, get_csrf_token
+from rest_framework.urlpatterns import format_suffix_patterns
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/person/', PersonCreateView.post),
+    path('api/person/', PersonCreateView.as_view()),
     path('api/get-csrf-token/', get_csrf_token),
 ]
+
+urlpatterns = format_suffix_patterns(urlpatterns)
