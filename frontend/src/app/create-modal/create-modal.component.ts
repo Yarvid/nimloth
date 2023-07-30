@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { NgForm } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
-import Cookies from 'js-cookie';
+//import Cookies from 'js-cookie';
 
 
 @Component({
@@ -31,13 +31,13 @@ export class CreateModalComponent {
       father: form.value.father
     };
 
-    const csrftoken = Cookies.get('csrftoken');
+    //const csrftoken = Cookies.get('csrftoken');
     
     // Create the headers and include the CSRF token
     const httpOptions = {
       headers: new HttpHeaders({
           'Content-Type':  'application/json',
-          'X-CSRFToken': csrftoken || ''
+          //'X-CSRFToken': csrftoken || ''
       })
     };
 

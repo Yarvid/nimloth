@@ -1,7 +1,7 @@
 <div class="modal">
     <div class="modal-content">
         <form #personForm="ngForm" (ngSubmit)="onSubmit(personForm)">
-            <h2>Create New Person</h2>
+            <h2>Neuen Verwandten anlegen</h2>
 
             <div class="row">
                 <div class="form-group">
@@ -73,6 +73,8 @@
             </div>
 
             <button type="submit" [disabled]="!personForm.valid">Create Person</button>
+
+            <button type="button" (click)="closeModal()">Cancel</button>
         </form>
     </div>
 </div>
