@@ -3,12 +3,14 @@ version: '3.8'
 services:
   backend:
     image: backend:dev
+    build: ./backend
     volumes:
       - ./backend/:/code/
     ports:
       - 8000:8000
   frontend:
     image: frontend:dev
+    build: ./frontend
     volumes:
       - ./frontend/:/app/
       - /app/node_modules

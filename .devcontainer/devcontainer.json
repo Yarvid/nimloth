@@ -12,7 +12,7 @@
 		"ghcr.io/devcontainers-contrib/features/angular-cli:2": {
 			"version": "latest"
 		}
-	}
+	},
 
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	// "features": {},
@@ -24,7 +24,32 @@
 	// "postCreateCommand": "uname -a",
 
 	// Configure tool-specific properties.
-	// "customizations": {},
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				// Python - backend
+				"ms-python.python",
+				"ms-python.vscode-pylance",
+				"ms-python.isort",
+				"batisteo.vscode-django",
+				// Angular - frontend
+				"angular.ng-template",
+				"infinity1207.angular2-switcher",
+				"ecmel.vscode-html-css",
+				// Git
+				"mhutchie.git-graph",
+				"donjayamanne.githistory",
+				// Other functionality
+				"ms-azuretools.vscode-docker",
+				"dbaeumer.vscode-eslint",
+				"esbenp.prettier-vscode",
+				"ionutvmi.path-autocomplete",
+				"fnando.linter",
+				// Misc
+				"tonybaloney.vscode-pets"
+			]
+		}
+	},
 
 	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
 	// "remoteUser": "root"
