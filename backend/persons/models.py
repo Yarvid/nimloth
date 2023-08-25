@@ -56,3 +56,21 @@ class Person(models.Model):
         null=True,
         related_name='modified_persons',
     )
+
+    def full_name(self):
+        return ' '.join([name for name in [self.first_name, self.middle_name, self.last_name] if name])
+
+    def age(self):
+        if self.date_of_birth is None:
+            return None
+        else:
+            today = datetime.today()
+            age = today - self.date_of_birth
+
+            years = age.days // 365
+            remaining_days = age.days % 365
+            months = remaining_days // 30
+            days = remaining_days % 30
+            
+            return years, months, days
+    
