@@ -3,7 +3,8 @@
 {
 	"name": "Default Linux Universal",
 	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
-	"image": "mcr.microsoft.com/devcontainers/universal:2-linux",
+	//"image": "mcr.microsoft.com/devcontainers/universal:2-linux",
+	"build": { "dockerfile": "dev.dockerfile" },
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	"features": {
 		"ghcr.io/devcontainers/features/python:1": {
@@ -20,7 +21,7 @@
 
 	// Use 'postCreateCommand' to run commands after the container is created.
 	"postCreateCommand": [
-		"python -m pip install -r /workspaces/nimloth/backend/requirements.txt"
+		//"python -m pip install -r /workspaces/nimloth/backend/requirements.txt"
 	],
 
 	// Configure tool-specific properties.
@@ -39,6 +40,7 @@
 				// Git
 				"mhutchie.git-graph",
 				"donjayamanne.githistory",
+				"github.vscode-github-actions",
 				// Other functionality
 				"ms-azuretools.vscode-docker",
 				"dbaeumer.vscode-eslint",
@@ -49,7 +51,7 @@
 				"tonybaloney.vscode-pets"
 			]
 		}
-	},
+	}
 
 	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
 	// "remoteUser": "root"
