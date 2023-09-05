@@ -1,4 +1,5 @@
 from django.db import models
+from datetime import datetime, date
 
 class Person(models.Model):
     # --- Names ---
@@ -58,19 +59,85 @@ class Person(models.Model):
     )
 
     def full_name(self):
+        """
+        Returns the full name of a person.
+        """
         return ' '.join([name for name in [self.first_name, self.middle_name, self.last_name] if name])
 
-    def age(self):
+    def time_since_birth(self):
         if self.date_of_birth is None:
             return None
-        else:
-            today = datetime.today()
-            age = today - self.date_of_birth
-
-            years = age.days // 365
-            remaining_days = age.days % 365
-            months = remaining_days // 30
-            days = remaining_days % 30
-            
-            return years, months, days
+        
+        return _time_difference(self.date_of_birth)
     
+    def time_since_death(self):    
+        if not self.date_of_death:
+            return None
+
+        return _time_difference(self.date_of_death)
+
+    def time_since_modification(self):
+        if not self.modified_on:
+            return None
+        
+        return _time_difference(self.modified_on)
+
+
+    from datetime import datetime, date
+from dateutil.relativedelta import relativedelta
+
+def _time_difference(d) -> dict:
+    """
+    Calculate the precise difference between a given date/datetime and the current date/datetime.
+
+    Parameters:
+    -----------
+    d : datetime.date or datetime.datetime
+        The date or datetime to compare against the current date/time.
+
+    Returns:
+    --------
+    dict
+        A dictionary containing the difference in:
+        - years
+        - months
+        - days
+        - hours (only if `d` is a datetime)
+        - minutes (only if `d` is a datetime)
+        - seconds (only if `d` is a datetime)
+
+    Raises:
+    -------
+    TypeError
+        If the provided input is neither a date nor a datetime.
+
+    Example:
+    --------
+    >>> precise_difference_to_now(datetime(2020, 1, 1, 12, 0, 0))
+    {'years': 3, 'months': 6, 'days': 15, 'hours': 10, 'minutes': 45, 'seconds': 30}
+    >>> precise_difference_to_now(date(2020, 1, 1))
+    {'years': 3, 'months': 6, 'days': 15}
+    """
+    if isinstance(d, datetime):
+        now = datetime.now()
+    elif isinstance(d, date):
+        now = date.today()
+    else:
+        raise TypeError("Expected datetime.date or datetime.datetime object.")
+
+    delta = relativedelta(now, d)
+
+    difference = {
+        'years': delta.years,
+        'months': delta.months,
+        'days': delta.days
+    }
+
+    if isinstance(d, datetime):
+        difference.update({
+            'hours': delta.hours,
+            'minutes': delta.minutes,
+            'seconds': delta.seconds
+        })
+
+    return difference

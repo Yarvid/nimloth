@@ -23,6 +23,14 @@
       "program": "${workspaceFolder}/backend/manage.py",
       "args": ["runserver"],
       "django": true
-    }
+    },
+    {
+      "name": "Django - Tests",
+      "type": "python",
+      "request": "launch",
+      "program": "${workspaceFolder}/backend/manage.py",
+      "args": ["test", "persons.tests"],
+      "django": true
+    },
   ]
 }
