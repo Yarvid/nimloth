@@ -21,7 +21,8 @@
 
 	// Use 'postCreateCommand' to run commands after the container is created.
 	"postCreateCommand": [
-		//"python -m pip install -r /workspaces/nimloth/backend/requirements.txt"
+		// "python -m pip install -r /workspaces/nimloth/backend/requirements.txt",
+		// "cd /workspaces/nimloth/frontend && npm install"
 	],
 
 	// Configure tool-specific properties.
