@@ -8,7 +8,7 @@ import { CreateModalComponent } from '../create-modal/create-modal.component';
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent {
-  
+
   constructor(public dialog: MatDialog) { }
 
   openModal(): void {

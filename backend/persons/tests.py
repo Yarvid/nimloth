@@ -23,7 +23,7 @@ class PersonTestCase(TestCase):
             'date_of_birth': date.today(1975, 8, 12),
             'gender': 'F',
         }
-        
+
 
         Person.objects.create(**create_args)
 

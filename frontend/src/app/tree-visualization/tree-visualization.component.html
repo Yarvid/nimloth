@@ -8,8 +8,8 @@
     </div>
 
     <div class="cards-grid" *ngIf="!loading && !error">
-        <app-person-card 
-          *ngFor="let person of persons" 
+        <app-person-card
+          *ngFor="let person of persons"
           [person]="person"
         ></app-person-card>
     </div>

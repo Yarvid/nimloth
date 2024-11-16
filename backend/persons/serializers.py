@@ -20,4 +20,3 @@ class PersonSerializer(serializers.ModelSerializer):
                   'father',
                   'gender'
         ]
-        

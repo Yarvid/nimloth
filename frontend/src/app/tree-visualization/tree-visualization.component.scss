@@ -1,19 +1,19 @@
 .tree-container {
     padding: 20px;
   }
-  
+
   .cards-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 20px;
     padding: 20px;
   }
-  
+
   .loading, .error {
     text-align: center;
     padding: 20px;
   }
-  
+
   .error {
     color: #dc3545;
   }

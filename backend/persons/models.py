@@ -8,10 +8,10 @@ class Person(models.Model):
     last_name = models.CharField(max_length=50, blank=True)
     birth_name = models.CharField(max_length=50, blank=True)
     artist_name = models.CharField(max_length=50, blank=True)
-    # --- Birth --- 
+    # --- Birth ---
     date_of_birth = models.DateField(null=True)
     place_of_birth = models.CharField(max_length=100, blank=True)
-    # --- Death --- 
+    # --- Death ---
     date_of_death = models.DateField(null=True)
     place_of_death = models.CharField(max_length=100, blank=True)
     cause_of_death = models.CharField(max_length=100, blank=True)
@@ -67,10 +67,10 @@ class Person(models.Model):
     def time_since_birth(self):
         if self.date_of_birth is None:
             return None
-        
+
         return _time_difference(self.date_of_birth)
-    
-    def time_since_death(self):    
+
+    def time_since_death(self):
         if not self.date_of_death:
             return None
 
@@ -79,7 +79,7 @@ class Person(models.Model):
     def time_since_modification(self):
         if not self.modified_on:
             return None
-        
+
         return _time_difference(self.modified_on)
 
 

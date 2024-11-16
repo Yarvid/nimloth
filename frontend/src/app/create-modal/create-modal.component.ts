@@ -32,7 +32,7 @@ export class CreateModalComponent {
     };
 
     //const csrftoken = Cookies.get('csrftoken');
-    
+
     // Create the headers and include the CSRF token
     const httpOptions = {
       headers: new HttpHeaders({

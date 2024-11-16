@@ -15,12 +15,12 @@ class PersonCreateView(APIView):
             serializer.save()
             return Response(serializer.data, status=201)
         return Response(serializer.errors, status=400)
-    
+
     def get(self, request, format=None):
         persons = Person.objects.all()
         serializer = PersonSerializer(persons, many=True)
         return Response(serializer.data)
-    
+
 
 def get_csrf_token(request):
     # FIXME: CSRF Cookie is not stored in Browser if set_cookie() is not used
