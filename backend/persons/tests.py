@@ -1,6 +1,7 @@
+from datetime import date
+
 from django.test import TestCase
 from persons.models import Person
-from datetime import date
 
 
 # Create your tests here.
@@ -32,5 +33,5 @@ class PersonTestCase(TestCase):
         self.assertEqual(person.full_name(), "Alice Marie Thompson")
 
     def test_person_time_since_birth(self):
-        person = Person.object.get(id=1)
+        # person = Person.object.get(id=1)
         self.assertEqual()

@@ -1,11 +1,11 @@
-from django.shortcuts import render
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from .serializers import PersonSerializer
-from .models import Person
-from django.middleware.csrf import get_token
 from django.http import JsonResponse
+from django.middleware.csrf import get_token
 from django.views.decorators.csrf import csrf_exempt
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
+from .models import Person
+from .serializers import PersonSerializer
 
 
 class PersonCreateView(APIView):

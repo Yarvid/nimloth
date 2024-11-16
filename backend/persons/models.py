@@ -1,5 +1,7 @@
+from datetime import date, datetime
+
+from dateutil.relativedelta import relativedelta
 from django.db import models
-from datetime import datetime, date
 
 
 class Person(models.Model):
@@ -89,11 +91,6 @@ class Person(models.Model):
             return None
 
         return _time_difference(self.modified_on)
-
-    from datetime import datetime, date
-
-
-from dateutil.relativedelta import relativedelta
 
 
 def _time_difference(d) -> dict:
