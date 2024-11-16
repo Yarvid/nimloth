@@ -1,6 +1,7 @@
 from django.db import models
 from datetime import datetime, date
 
+
 class Person(models.Model):
     # --- Names ---
     first_name = models.CharField(max_length=50, blank=True)
@@ -17,52 +18,59 @@ class Person(models.Model):
     cause_of_death = models.CharField(max_length=100, blank=True)
     # --- Relationship ---
     mother = models.ForeignKey(
-        'self',
+        "self",
         models.SET_NULL,
         blank=True,
         null=True,
-        related_name='mother_of',
+        related_name="mother_of",
     )
     father = models.ForeignKey(
-        'self',
+        "self",
         models.SET_NULL,
         blank=True,
         null=True,
-        related_name='father_of',
+        related_name="father_of",
     )
     # --- Other ---
     gender = models.CharField(
         max_length=1,
         choices=[
-        ('M', 'Male'),
-        ('F', 'Female'),
-        ('N', 'Non-Binary'),
-        ('U', 'Unspecified'),
-    ],
-        default='U')
+            ("M", "Male"),
+            ("F", "Female"),
+            ("N", "Non-Binary"),
+            ("U", "Unspecified"),
+        ],
+        default="U",
+    )
     # --- Modifictation log ---
     created_on = models.DateField(auto_now_add=True, null=True)
     modified_on = models.DateField(auto_now=True, null=True)
     created_by = models.ForeignKey(
-        'self',
+        "self",
         models.SET_NULL,
         blank=True,
         null=True,
-        related_name='created_persons',
+        related_name="created_persons",
     )
     modified_by = models.ForeignKey(
-        'self',
+        "self",
         models.SET_NULL,
         blank=True,
         null=True,
-        related_name='modified_persons',
+        related_name="modified_persons",
     )
 
     def full_name(self):
         """
         Returns the full name of a person.
         """
-        return ' '.join([name for name in [self.first_name, self.middle_name, self.last_name] if name])
+        return " ".join(
+            [
+                name
+                for name in [self.first_name, self.middle_name, self.last_name]
+                if name
+            ]
+        )
 
     def time_since_birth(self):
         if self.date_of_birth is None:
@@ -82,9 +90,11 @@ class Person(models.Model):
 
         return _time_difference(self.modified_on)
 
-
     from datetime import datetime, date
+
+
 from dateutil.relativedelta import relativedelta
+
 
 def _time_difference(d) -> dict:
     """
@@ -127,17 +137,11 @@ def _time_difference(d) -> dict:
 
     delta = relativedelta(now, d)
 
-    difference = {
-        'years': delta.years,
-        'months': delta.months,
-        'days': delta.days
-    }
+    difference = {"years": delta.years, "months": delta.months, "days": delta.days}
 
     if isinstance(d, datetime):
-        difference.update({
-            'hours': delta.hours,
-            'minutes': delta.minutes,
-            'seconds': delta.seconds
-        })
+        difference.update(
+            {"hours": delta.hours, "minutes": delta.minutes, "seconds": delta.seconds}
+        )
 
     return difference

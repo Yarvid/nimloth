@@ -12,11 +12,11 @@ repos:
         args: ['--fix=lf']
 
 # Python/Django specific hooks
-#-   repo: https://github.com/psf/black
-#    rev: 24.1.1
-#    hooks:
-#    -   id: black
-#        files: ^backend/.*\.py$
+-   repo: https://github.com/psf/black
+    rev: 24.1.1
+    hooks:
+    -   id: black
+        files: ^backend/.*\.py$
 
 #-   repo: https://github.com/PyCQA/flake8
 #    rev: 7..0
