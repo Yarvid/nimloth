@@ -17,7 +17,7 @@ interface Person {
   standalone: true,
   imports: [],
   templateUrl: './person-card.component.html',
-  styleUrls: ['./person-card.component.scss']
+  styleUrls: ['./person-card.component.scss'],
 })
 export class PersonCardComponent {
   @Input() person!: Person;

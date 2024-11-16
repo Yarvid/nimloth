@@ -1,4 +1,4 @@
-import { NgIf, NgFor } from '@angular/common'
+import { NgIf, NgFor } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { PersonService } from '../person.service';
 import { PersonCardComponent } from '../person-card/person-card.component';
@@ -8,9 +8,9 @@ import { PersonCardComponent } from '../person-card/person-card.component';
   templateUrl: './tree-visualization.component.html',
   styleUrls: ['./tree-visualization.component.scss'],
   imports: [PersonCardComponent, NgIf, NgFor],
-  standalone: true
+  standalone: true,
 })
-export class TreeVisualizationComponent implements OnInit{
+export class TreeVisualizationComponent implements OnInit {
   persons: any[] = [];
   loading = false;
   error: string | null = null;
@@ -26,8 +26,8 @@ export class TreeVisualizationComponent implements OnInit{
       },
       error: (err) => {
         this.error = 'Failed to load view';
-        this.loading = false
-      }
-    })
+        this.loading = false;
+      },
+    });
   }
 }

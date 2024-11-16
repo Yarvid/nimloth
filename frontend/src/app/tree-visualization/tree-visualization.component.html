@@ -1,16 +1,14 @@
 <div class="tree-container">
-    <div *ngIf="loading" class="loading">
-        Loading view...
-    </div>
+  <div *ngIf="loading" class="loading">Loading view...</div>
 
-    <div *ngIf="error", class="error">
-        {{ error }}
-    </div>
+  <div *ngIf="error" , class="error">
+    {{ error }}
+  </div>
 
-    <div class="cards-grid" *ngIf="!loading && !error">
-        <app-person-card
-          *ngFor="let person of persons"
-          [person]="person"
-        ></app-person-card>
-    </div>
+  <div class="cards-grid" *ngIf="!loading && !error">
+    <app-person-card
+      *ngFor="let person of persons"
+      [person]="person"
+    ></app-person-card>
+  </div>
 </div>

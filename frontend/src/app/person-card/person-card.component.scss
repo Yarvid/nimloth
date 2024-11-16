@@ -1,25 +1,25 @@
 .person-card {
-    background: rgb(241, 241, 241);
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    overflow: hidden;
-    transition: transform 0.2s;
-  }
+  background: rgb(241, 241, 241);
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.2s;
+}
 
-  .person-card:hover {
-    transform: translateY(-5px);
-  }
+.person-card:hover {
+  transform: translateY(-5px);
+}
 
-  .card-header {
-    text-align: center;
-    padding: 5px;
-    background: #819e81;
-  }
+.card-header {
+  text-align: center;
+  padding: 5px;
+  background: #819e81;
+}
 
-  .card-body {
-    padding: 10px;
-  }
+.card-body {
+  padding: 10px;
+}
 
-  .card-body h3 {
-    color: #333;
-  }
+.card-body h3 {
+  color: #333;
+}

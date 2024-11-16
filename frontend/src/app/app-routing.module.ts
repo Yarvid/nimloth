@@ -3,12 +3,12 @@ import { RouterModule, Routes } from '@angular/router';
 import { TreeVisualizationComponent } from './tree-visualization/tree-visualization.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/tree-visualization', pathMatch: 'full'},
-  { path: 'tree-visualization', component: TreeVisualizationComponent}
+  { path: '', redirectTo: '/tree-visualization', pathMatch: 'full' },
+  { path: 'tree-visualization', component: TreeVisualizationComponent },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

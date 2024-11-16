@@ -8,7 +8,7 @@ describe('TreeVisualizationComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [TreeVisualizationComponent]
+      declarations: [TreeVisualizationComponent],
     });
     fixture = TestBed.createComponent(TreeVisualizationComponent);
     component = fixture.componentInstance;

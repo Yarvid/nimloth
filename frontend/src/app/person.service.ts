@@ -10,14 +10,14 @@ interface Person {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PersonService {
-  private apiUrl = 'http://localhost:8000/api/person/'
+  private apiUrl = 'http://localhost:8000/api/person/';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   getAllPersons(): Observable<Person[]> {
-    return this.http.get<Person[]>(this.apiUrl)
+    return this.http.get<Person[]>(this.apiUrl);
   }
 }
