@@ -43,15 +43,19 @@ repos:
         -   prettier@3.1.0
         -   '@angular-eslint/eslint-plugin@17.0.0'
 
-#-   repo: https://github.com/pre-commit/mirrors-eslint
-#    rev: v8.56.0
-#    hooks:
-#    -   id: eslint
-#        files: ^frontend/.*\.(ts|js)$
-#        types: [file]
-#        additional_dependencies:
-#        -   eslint@8.56.0
-#        -   '@typescript-eslint/parser@6.0.0'
-#        -   '@typescript-eslint/eslint-plugin@6.0.0'
-#        -   '@angular-eslint/eslint-plugin@17.0.0'
-#        -   '@angular-eslint/eslint-plugin-template@17.0.0'
+-   repo: https://github.com/pre-commit/mirrors-eslint
+    rev: v8.56.0
+    hooks:
+    -   id: eslint
+        files: ^frontend/.*\.(ts|js)$
+        types: [file]
+        additional_dependencies:
+        -   eslint@8.56.0
+        -   '@typescript-eslint/parser@6.0.0'
+        -   '@typescript-eslint/eslint-plugin@6.0.0'
+        -   '@angular-eslint/eslint-plugin@17.0.0'
+        -   '@angular-eslint/eslint-plugin-template@17.0.0'
+        args: [
+            '--config', 'frontend/.eslintrc.js',
+            '--resolve-plugins-relative-to', 'frontend'
+        ]

@@ -21,8 +21,8 @@
 
 	// Use 'postCreateCommand' to run commands after the container is created.
 	"postCreateCommand": [
-		// "python -m pip install -r /workspaces/nimloth/backend/requirements.txt",
-		// "cd /workspaces/nimloth/frontend && npm install"
+		"sh",
+		"./.devcontainer/setup.sh"
 	],
 
 	// Configure tool-specific properties.
@@ -52,8 +52,8 @@
 				"tonybaloney.vscode-pets"
 			]
 		}
-	}
+	},
 
 	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
-	// "remoteUser": "root"
+	"remoteUser": "root"
 }
