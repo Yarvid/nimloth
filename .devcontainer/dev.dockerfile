@@ -10,6 +10,4 @@ RUN python -m venv /venv
 ENV PATH="/venv/bin:$PATH"
 
 RUN python -m pip install --upgrade pip \
-&& curl https://raw.githubusercontent.com/nektos/act/master/install.sh | sudo bash \
-&& python -m pip install django \
-&& python -m pip install django-extensions
+&& curl https://raw.githubusercontent.com/nektos/act/master/install.sh | sudo bash

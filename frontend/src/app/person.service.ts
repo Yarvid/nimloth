@@ -1,13 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
-
-interface Person {
-  id: number;
-  firstName: string;
-  lastName: string;
-  dateOfBirth?: string;
-}
+import { Observable } from 'rxjs';
+import { IPerson } from './models';
 
 @Injectable({
   providedIn: 'root',
@@ -17,7 +11,7 @@ export class PersonService {
 
   constructor(private http: HttpClient) {}
 
-  getAllPersons(): Observable<Person[]> {
-    return this.http.get<Person[]>(this.apiUrl);
+  getAllPersons(): Observable<IPerson[]> {
+    return this.http.get<IPerson[]>(this.apiUrl);
   }
 }

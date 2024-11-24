@@ -2,6 +2,7 @@ import { NgIf, NgFor } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { PersonService } from '../person.service';
 import { PersonCardComponent } from '../person-card/person-card.component';
+import { IPerson } from '../models';
 
 @Component({
   selector: 'app-tree-visualization',
@@ -11,7 +12,7 @@ import { PersonCardComponent } from '../person-card/person-card.component';
   standalone: true,
 })
 export class TreeVisualizationComponent implements OnInit {
-  persons: any[] = [];
+  persons: IPerson[] = [];
   loading = false;
   error: string | null = null;
 
@@ -25,7 +26,7 @@ export class TreeVisualizationComponent implements OnInit {
         this.loading = false;
       },
       error: (err) => {
-        this.error = 'Failed to load view';
+        this.error = err;
         this.loading = false;
       },
     });

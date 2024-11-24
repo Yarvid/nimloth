@@ -4,7 +4,6 @@ import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { TreeVisualizationComponent } from './tree-visualization/tree-visualization.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { CreateModalComponent } from './create-modal/create-modal.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';

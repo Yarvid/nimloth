@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { NgForm } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
+import { IPerson } from '../models';
 //import Cookies from 'js-cookie';
 
 @Component({
@@ -15,7 +16,21 @@ export class CreateModalComponent {
     public dialogRef: MatDialogRef<CreateModalComponent>,
   ) {}
 
-  person: any = {}; // Object to store the person data
+  person: IPerson = {
+    first_name: '',
+    middle_name: '',
+    last_name: '',
+    birth_name: '',
+    artist_name: '',
+    date_of_birth: null,
+    place_of_birth: '',
+    date_of_death: null,
+    place_of_death: '',
+    cause_of_death: '',
+    mother: null,
+    father: null,
+    gender: 'U',
+  }; // Object to store the person data
 
   onSubmit(form: NgForm) {
     if (form.invalid) {
