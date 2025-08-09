@@ -2,34 +2,93 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px;
+  padding: 10px 20px;
   background-color: #113e21;
   color: white;
   border-radius: 5px;
-  font-family: "Montserrat" sans-serif;
-}
+  font-family: "Montserrat", sans-serif;
 
-.navbar-left {
-  display: flex;
-  align-items: center;
-}
+  .navbar-left {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
 
-.navbar-right {
-  display: flex;
-  align-items: center;
-}
+  .navbar-middle {
+    .create-button {
+      padding: 8px 16px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: 500;
 
-.user-account,
-.settings {
-  margin-left: 10px;
-  display: flex;
-  align-items: center;
-}
+      &:hover {
+        background-color: #218838;
+      }
+    }
+  }
 
-.material-symbols-outlined {
-  font-variation-settings:
-    "FILL" 0,
-    "wght" 400,
-    "GRAD" 0,
-    "opsz" 48;
+  .navbar-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+
+    .user-account {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+
+      .username {
+        font-weight: 500;
+      }
+
+      .logout-btn {
+        padding: 6px 12px;
+        background-color: #dc3545;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 0.9rem;
+
+        &:hover {
+          background-color: #c82333;
+        }
+      }
+    }
+
+    .auth-buttons {
+      display: flex;
+      gap: 10px;
+
+      a {
+        padding: 6px 12px;
+        background-color: #667eea;
+        color: white;
+        text-decoration: none;
+        border-radius: 4px;
+        font-size: 0.9rem;
+
+        &:hover {
+          background-color: #5a67d8;
+        }
+      }
+    }
+
+    .settings {
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  .material-symbols-outlined {
+    font-variation-settings:
+      "FILL" 0,
+      "wght" 400,
+      "GRAD" 0,
+      "opsz" 48;
+  }
 }

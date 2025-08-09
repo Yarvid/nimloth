@@ -1,0 +1,112 @@
+<div class="register-container">
+    <div class="register-card">
+      <h2>Create Your Account</h2>
+      
+      <div *ngIf="success" class="alert alert-success">
+        Registration successful! Redirecting to login...
+      </div>
+  
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" *ngIf="!success">
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input 
+            type="text" 
+            id="username"
+            formControlName="username" 
+            class="form-control"
+            [ngClass]="{ 'is-invalid': f['username'].errors && f['username'].touched }"
+          />
+          <div *ngIf="f['username'].errors && f['username'].touched" class="invalid-feedback">
+            <span *ngIf="f['username'].errors['required']">Username is required</span>
+            <span *ngIf="f['username'].errors['minlength']">Username must be at least 3 characters</span>
+          </div>
+        </div>
+  
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input 
+            type="email" 
+            id="email"
+            formControlName="email" 
+            class="form-control"
+            [ngClass]="{ 'is-invalid': f['email'].errors && f['email'].touched }"
+          />
+          <div *ngIf="f['email'].errors && f['email'].touched" class="invalid-feedback">
+            <span *ngIf="f['email'].errors['required']">Email is required</span>
+            <span *ngIf="f['email'].errors['email']">Please enter a valid email</span>
+          </div>
+        </div>
+  
+        <div class="form-row">
+          <div class="form-group col">
+            <label for="first_name">First Name</label>
+            <input 
+              type="text" 
+              id="first_name"
+              formControlName="first_name" 
+              class="form-control"
+              [ngClass]="{ 'is-invalid': f['first_name'].errors && f['first_name'].touched }"
+            />
+            <div *ngIf="f['first_name'].errors && f['first_name'].touched" class="invalid-feedback">
+              First name is required
+            </div>
+          </div>
+  
+          <div class="form-group col">
+            <label for="last_name">Last Name</label>
+            <input 
+              type="text" 
+              id="last_name"
+              formControlName="last_name" 
+              class="form-control"
+              [ngClass]="{ 'is-invalid': f['last_name'].errors && f['last_name'].touched }"
+            />
+            <div *ngIf="f['last_name'].errors && f['last_name'].touched" class="invalid-feedback">
+              Last name is required
+            </div>
+          </div>
+        </div>
+  
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input 
+            type="password" 
+            id="password"
+            formControlName="password" 
+            class="form-control"
+            [ngClass]="{ 'is-invalid': f['password'].errors && f['password'].touched }"
+          />
+          <div *ngIf="f['password'].errors && f['password'].touched" class="invalid-feedback">
+            <span *ngIf="f['password'].errors['required']">Password is required</span>
+            <span *ngIf="f['password'].errors['minlength']">Password must be at least 8 characters</span>
+          </div>
+        </div>
+  
+        <div class="form-group">
+          <label for="password2">Confirm Password</label>
+          <input 
+            type="password" 
+            id="password2"
+            formControlName="password2" 
+            class="form-control"
+            [ngClass]="{ 'is-invalid': f['password2'].errors && f['password2'].touched }"
+          />
+          <div *ngIf="f['password2'].errors && f['password2'].touched" class="invalid-feedback">
+            <span *ngIf="f['password2'].errors['required']">Please confirm your password</span>
+            <span *ngIf="f['password2'].errors['passwordMismatch']">Passwords do not match</span>
+          </div>
+        </div>
+  
+        <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+  
+        <button type="submit" [disabled]="loading" class="btn btn-primary">
+          <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+          Register
+        </button>
+  
+        <div class="form-footer">
+          <a routerLink="/login">Already have an account? Login</a>
+        </div>
+      </form>
+    </div>
+  </div>

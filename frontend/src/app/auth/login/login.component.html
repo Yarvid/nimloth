@@ -1,0 +1,47 @@
+<div class="login-container">
+    <div class="login-card">
+      <h2>Login to Nimloth</h2>
+      
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input 
+            type="text" 
+            id="username"
+            formControlName="username" 
+            class="form-control"
+            [ngClass]="{ 'is-invalid': f['username'].errors && f['username'].touched }"
+          />
+          <div *ngIf="f['username'].errors && f['username'].touched" class="invalid-feedback">
+            Username is required
+          </div>
+        </div>
+  
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input 
+            type="password" 
+            id="password"
+            formControlName="password" 
+            class="form-control"
+            [ngClass]="{ 'is-invalid': f['password'].errors && f['password'].touched }"
+          />
+          <div *ngIf="f['password'].errors && f['password'].touched" class="invalid-feedback">
+            Password is required
+          </div>
+        </div>
+  
+        <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+  
+        <button type="submit" [disabled]="loading" class="btn btn-primary">
+          <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+          Login
+        </button>
+  
+        <div class="form-footer">
+          <a routerLink="/register">Don't have an account? Register</a>
+          <a routerLink="/forgot-password">Forgot Password?</a>
+        </div>
+      </form>
+    </div>
+  </div>
