@@ -63,12 +63,15 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "buildTarget": "nimloth:build:development"
+          },
           "configurations": {
             "production": {
-              "browserTarget": "nimloth:build:production"
+              "buildTarget": "nimloth:build:production"
             },
             "development": {
-              "browserTarget": "nimloth:build:development"
+              "buildTarget": "nimloth:build:development"
             }
           },
           "defaultConfiguration": "development"
