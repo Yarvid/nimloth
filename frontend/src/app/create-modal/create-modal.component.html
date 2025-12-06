@@ -3,10 +3,21 @@
     <form #personForm="ngForm" (ngSubmit)="onSubmit(personForm)">
       <h2>Neuen Verwandten anlegen</h2>
 
+      <div *ngIf="errorMessage" class="error-message">
+        {{ errorMessage }}
+      </div>
+
       <div class="row">
         <div class="form-group">
-          <label for="firstName">Vorname</label>
-          <input type="text" id="firstName" name="firstName" ngModel required />
+          <label for="firstName">Vorname *</label>
+          <input
+            type="text"
+            id="firstName"
+            name="firstName"
+            ngModel
+            required
+            [disabled]="isLoading"
+          />
         </div>
 
         <div class="form-group">
@@ -16,73 +27,164 @@
             id="middleName"
             name="middleName"
             ngModel
-            required
+            [disabled]="isLoading"
           />
         </div>
 
         <div class="form-group">
-          <label for="lastName">Nachname</label>
-          <input type="text" id="lastName" name="lastName" ngModel required />
+          <label for="lastName">Nachname *</label>
+          <input
+            type="text"
+            id="lastName"
+            name="lastName"
+            ngModel
+            required
+            [disabled]="isLoading"
+          />
         </div>
+      </div>
+
+      <div class="row">
         <div class="form-group">
           <label for="birthName">Geburtsname</label>
-          <input type="text" id="birthName" name="birthName" ngModel required />
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="form-group">
-          <label for="dob">Date of Birth</label>
-          <input type="date" id="dob" name="dob" ngModel required />
-        </div>
-
-        <div class="form-group">
-          <label for="pob">Place of Birth</label>
-          <input type="text" id="pob" name="pob" ngModel required />
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="form-group">
-          <label for="dod">Date of Death</label>
-          <input type="date" id="dod" name="dod" ngModel required />
+          <input
+            type="text"
+            id="birthName"
+            name="birthName"
+            ngModel
+            [disabled]="isLoading"
+          />
         </div>
 
         <div class="form-group">
-          <label for="pod">Place of Death</label>
-          <input type="text" id="pod" name="pod" ngModel required />
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="form-group">
-          <label for="mother">Mother</label>
-          <select id="mother" name="mother" ngModel required>
-            <option value="">--Please choose an option--</option>
-            <!-- Populate this with data from the backend -->
-            <option value="1">Mother 1</option>
-            <option value="2">Mother 2</option>
-            <option value="3">Mother 3</option>
-          </select>
+          <label for="artistName">Künstlername</label>
+          <input
+            type="text"
+            id="artistName"
+            name="artistName"
+            ngModel
+            [disabled]="isLoading"
+          />
         </div>
 
         <div class="form-group">
-          <label for="father">Father</label>
-          <select id="father" name="father" ngModel required>
-            <option value="">--Please choose an option--</option>
-            <!-- Populate this with data from the backend -->
-            <option value="1">Father 1</option>
-            <option value="2">Father 2</option>
-            <option value="3">Father 3</option>
+          <label for="gender">Geschlecht</label>
+          <select id="gender" name="gender" ngModel="U" [disabled]="isLoading">
+            <option value="U">Unbekannt</option>
+            <option value="M">Männlich</option>
+            <option value="F">Weiblich</option>
+            <option value="N">Nicht-binär</option>
           </select>
         </div>
       </div>
 
-      <button type="submit" [disabled]="!personForm.valid">
-        Create Person
-      </button>
+      <div class="row">
+        <div class="form-group">
+          <label for="dob">Geburtsdatum</label>
+          <input
+            type="date"
+            id="dob"
+            name="dob"
+            ngModel
+            [disabled]="isLoading"
+          />
+        </div>
 
-      <button type="button" (click)="closeModal()">Cancel</button>
+        <div class="form-group">
+          <label for="pob">Geburtsort</label>
+          <input
+            type="text"
+            id="pob"
+            name="pob"
+            ngModel
+            [disabled]="isLoading"
+          />
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group">
+          <label for="dod">Todesdatum</label>
+          <input
+            type="date"
+            id="dod"
+            name="dod"
+            ngModel
+            [disabled]="isLoading"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="pod">Todesort</label>
+          <input
+            type="text"
+            id="pod"
+            name="pod"
+            ngModel
+            [disabled]="isLoading"
+          />
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group full-width">
+          <label for="cod">Todesursache</label>
+          <input
+            type="text"
+            id="cod"
+            name="cod"
+            ngModel
+            [disabled]="isLoading"
+          />
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group">
+          <label for="mother">Mutter</label>
+          <select id="mother" name="mother" ngModel [disabled]="isLoading">
+            <option [value]="null">-- Keine --</option>
+            <option *ngFor="let person of allPersons" [value]="person.id">
+              {{ person.first_name }} {{ person.last_name }}
+              <span *ngIf="person.date_of_birth">
+                ({{ person.date_of_birth | date: "yyyy" }})
+              </span>
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="father">Vater</label>
+          <select id="father" name="father" ngModel [disabled]="isLoading">
+            <option [value]="null">-- Keine --</option>
+            <option *ngFor="let person of allPersons" [value]="person.id">
+              {{ person.first_name }} {{ person.last_name }}
+              <span *ngIf="person.date_of_birth">
+                ({{ person.date_of_birth | date: "yyyy" }})
+              </span>
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div class="button-group">
+        <button
+          type="submit"
+          [disabled]="!personForm.valid || isLoading"
+          class="btn-primary"
+        >
+          {{ isLoading ? "Erstelle..." : "Person erstellen" }}
+        </button>
+
+        <button
+          type="button"
+          (click)="closeModal()"
+          [disabled]="isLoading"
+          class="btn-secondary"
+        >
+          Abbrechen
+        </button>
+      </div>
     </form>
   </div>
 </div>

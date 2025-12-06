@@ -1,10 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import { IPerson } from '../models';
-//import Cookies from 'js-cookie';
+import { PersonService } from '../person.service';
 
 @Component({
   selector: 'app-create-modal',
@@ -13,9 +12,13 @@ import { IPerson } from '../models';
   templateUrl: './create-modal.component.html',
   styleUrls: ['./create-modal.component.scss'],
 })
-export class CreateModalComponent {
+export class CreateModalComponent implements OnInit {
+  allPersons: IPerson[] = [];
+  errorMessage = '';
+  isLoading = false;
+
   constructor(
-    private http: HttpClient,
+    private personService: PersonService,
     public dialogRef: MatDialogRef<CreateModalComponent>,
   ) {}
 
@@ -33,47 +36,60 @@ export class CreateModalComponent {
     mother: null,
     father: null,
     gender: 'U',
-  }; // Object to store the person data
+  };
 
-  onSubmit(form: NgForm) {
+  ngOnInit(): void {
+    this.loadPersons();
+  }
+
+  loadPersons(): void {
+    this.personService.getAllPersons().subscribe({
+      next: (persons) => {
+        this.allPersons = persons;
+      },
+      error: (error) => {
+        console.error('Error loading persons:', error);
+        this.errorMessage = 'Failed to load persons for parent selection';
+      },
+    });
+  }
+
+  onSubmit(form: NgForm): void {
     if (form.invalid) {
       return;
     }
 
-    const newPerson = {
-      first_name: form.value.firstName,
-      middle_name: form.value.middleName,
-      last_name: form.value.lastName,
-      birth_name: form.value.birthName,
-      date_of_birth: form.value.dob,
-      place_of_birth: form.value.pob,
-      mother: form.value.mother,
-      father: form.value.father,
+    this.isLoading = true;
+    this.errorMessage = '';
+
+    const newPerson: IPerson = {
+      first_name: form.value.firstName || '',
+      middle_name: form.value.middleName || '',
+      last_name: form.value.lastName || '',
+      birth_name: form.value.birthName || '',
+      artist_name: form.value.artistName || '',
+      date_of_birth: form.value.dob || null,
+      place_of_birth: form.value.pob || '',
+      date_of_death: form.value.dod || null,
+      place_of_death: form.value.pod || '',
+      cause_of_death: form.value.cod || '',
+      mother: form.value.mother ? Number(form.value.mother) : null,
+      father: form.value.father ? Number(form.value.father) : null,
+      gender: form.value.gender || 'U',
     };
 
-    //const csrftoken = Cookies.get('csrftoken');
-
-    // Create the headers and include the CSRF token
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        //'X-CSRFToken': csrftoken || ''
-      }),
-    };
-
-    this.http
-      .post('http://localhost:8000/api/person/', newPerson, httpOptions)
-      .subscribe(
-        (response) => {
-          console.log('Person created successfully!', response);
-          form.resetForm(); // reset the form after successful submission
-          // Add your own logic here for a successful form submission
-        },
-        (error) => {
-          console.error('There was an error!', error);
-          // Add your own logic here for handling errors
-        },
-      );
+    this.personService.createPerson(newPerson).subscribe({
+      next: (response) => {
+        console.log('Person created successfully!', response);
+        this.dialogRef.close(response);
+      },
+      error: (error) => {
+        console.error('Error creating person:', error);
+        this.errorMessage =
+          error.error?.detail || 'Failed to create person. Please try again.';
+        this.isLoading = false;
+      },
+    });
   }
 
   closeModal(): void {
