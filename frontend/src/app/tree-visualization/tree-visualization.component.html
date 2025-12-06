@@ -9,6 +9,7 @@
     <app-person-card
       *ngFor="let person of persons"
       [person]="person"
+      (editPerson)="openEditModal($event)"
     ></app-person-card>
   </div>
 </div>

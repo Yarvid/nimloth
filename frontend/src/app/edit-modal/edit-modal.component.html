@@ -1,0 +1,214 @@
+<div class="modal">
+  <div class="modal-content">
+    <form #personForm="ngForm" (ngSubmit)="onSubmit(personForm)">
+      <h2>Person bearbeiten</h2>
+
+      <div *ngIf="errorMessage" class="error-message">
+        {{ errorMessage }}
+      </div>
+
+      <div class="row">
+        <div class="form-group">
+          <label for="firstName">Vorname *</label>
+          <input
+            type="text"
+            id="firstName"
+            name="firstName"
+            [(ngModel)]="person.first_name"
+            required
+            [disabled]="isLoading"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="middleName">Zwischenname</label>
+          <input
+            type="text"
+            id="middleName"
+            name="middleName"
+            [(ngModel)]="person.middle_name"
+            [disabled]="isLoading"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="lastName">Nachname *</label>
+          <input
+            type="text"
+            id="lastName"
+            name="lastName"
+            [(ngModel)]="person.last_name"
+            required
+            [disabled]="isLoading"
+          />
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group">
+          <label for="birthName">Geburtsname</label>
+          <input
+            type="text"
+            id="birthName"
+            name="birthName"
+            [(ngModel)]="person.birth_name"
+            [disabled]="isLoading"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="artistName">Künstlername</label>
+          <input
+            type="text"
+            id="artistName"
+            name="artistName"
+            [(ngModel)]="person.artist_name"
+            [disabled]="isLoading"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="gender">Geschlecht</label>
+          <select
+            id="gender"
+            name="gender"
+            [(ngModel)]="person.gender"
+            [disabled]="isLoading"
+          >
+            <option value="U">Unbekannt</option>
+            <option value="M">Männlich</option>
+            <option value="F">Weiblich</option>
+            <option value="N">Nicht-binär</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group">
+          <label for="dob">Geburtsdatum</label>
+          <input
+            type="date"
+            id="dob"
+            name="dob"
+            [(ngModel)]="person.date_of_birth"
+            [disabled]="isLoading"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="pob">Geburtsort</label>
+          <input
+            type="text"
+            id="pob"
+            name="pob"
+            [(ngModel)]="person.place_of_birth"
+            [disabled]="isLoading"
+          />
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group">
+          <label for="dod">Todesdatum</label>
+          <input
+            type="date"
+            id="dod"
+            name="dod"
+            [(ngModel)]="person.date_of_death"
+            [disabled]="isLoading"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="pod">Todesort</label>
+          <input
+            type="text"
+            id="pod"
+            name="pod"
+            [(ngModel)]="person.place_of_death"
+            [disabled]="isLoading"
+          />
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group full-width">
+          <label for="cod">Todesursache</label>
+          <input
+            type="text"
+            id="cod"
+            name="cod"
+            [(ngModel)]="person.cause_of_death"
+            [disabled]="isLoading"
+          />
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group">
+          <label for="mother">Mutter</label>
+          <select
+            id="mother"
+            name="mother"
+            [(ngModel)]="person.mother"
+            [disabled]="isLoading"
+          >
+            <option [value]="null">-- Keine --</option>
+            <option *ngFor="let p of allPersons" [value]="p.id">
+              {{ p.first_name }} {{ p.last_name }}
+              <span *ngIf="p.date_of_birth">
+                ({{ p.date_of_birth | date: "yyyy" }})
+              </span>
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="father">Vater</label>
+          <select
+            id="father"
+            name="father"
+            [(ngModel)]="person.father"
+            [disabled]="isLoading"
+          >
+            <option [value]="null">-- Keine --</option>
+            <option *ngFor="let p of allPersons" [value]="p.id">
+              {{ p.first_name }} {{ p.last_name }}
+              <span *ngIf="p.date_of_birth">
+                ({{ p.date_of_birth | date: "yyyy" }})
+              </span>
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div class="button-group">
+        <button
+          type="submit"
+          [disabled]="!personForm.valid || isLoading"
+          class="btn-primary"
+        >
+          {{ isLoading ? "Speichern..." : "Speichern" }}
+        </button>
+
+        <button
+          type="button"
+          (click)="onDelete()"
+          [disabled]="isLoading"
+          class="btn-danger"
+        >
+          Löschen
+        </button>
+
+        <button
+          type="button"
+          (click)="closeModal()"
+          [disabled]="isLoading"
+          class="btn-secondary"
+        >
+          Abbrechen
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

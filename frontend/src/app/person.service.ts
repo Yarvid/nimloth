@@ -26,4 +26,20 @@ export class PersonService {
       }),
     );
   }
+
+  updatePerson(id: number, person: IPerson): Observable<IPerson> {
+    return this.http.put<IPerson>(`${this.apiUrl}${id}/`, person).pipe(
+      tap((updatedPerson) => {
+        this.personCreatedSubject.next(updatedPerson);
+      }),
+    );
+  }
+
+  deletePerson(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}${id}/`).pipe(
+      tap(() => {
+        this.personCreatedSubject.next({} as IPerson);
+      }),
+    );
+  }
 }
