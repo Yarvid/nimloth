@@ -5,16 +5,21 @@
   </div>
   <div class="navbar-middle">
     <!-- Create button -->
-    <button class="create-button" (click)="openModal()">Create</button>
+    <button class="create-button" (click)="openModal()" *ngIf="isAuthenticated">
+      Create
+    </button>
   </div>
   <div class="navbar-right">
-    <!-- Settings option-->
-    <div class="settings">
-      <i class="material-symbols-outlined">settings</i>
-    </div>
-    <!-- User account options-->
-    <div class="user-account">
-      <i class="material-symbols-outlined">person</i>
-    </div>
+    <ng-container *ngIf="isAuthenticated">
+      <!-- User info -->
+      <div class="user-info" *ngIf="currentUser">
+        <span class="username">{{ currentUser.username }}</span>
+      </div>
+      <!-- Logout button-->
+      <button class="logout-button" (click)="logout()">
+        <i class="material-symbols-outlined">logout</i>
+        Logout
+      </button>
+    </ng-container>
   </div>
 </nav>

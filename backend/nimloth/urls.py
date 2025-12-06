@@ -17,13 +17,16 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path
-from persons.views import PersonCreateView, get_csrf_token
+from persons.auth_views import check_auth, login_view, logout_view
+from persons.views import PersonCreateView
 from rest_framework.urlpatterns import format_suffix_patterns
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/person/", PersonCreateView.as_view()),
-    path("api/get-csrf-token/", get_csrf_token),
+    path("api/auth/login/", login_view, name="login"),
+    path("api/auth/logout/", logout_view, name="logout"),
+    path("api/auth/check/", check_auth, name="check_auth"),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

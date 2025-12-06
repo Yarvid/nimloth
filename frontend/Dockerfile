@@ -13,7 +13,7 @@ COPY package-lock.json /app/package-lock.json
 
 # Install app dependencies
 RUN npm install
-RUN npm install -g @angular/cli@11.0.7
+RUN npm install -g @angular/cli@19.0.1
 
 # Copy app source to the working directory
 COPY . /app

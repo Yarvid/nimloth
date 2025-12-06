@@ -1,12 +1,15 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule, NgForm } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { NgForm } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import { IPerson } from '../models';
 //import Cookies from 'js-cookie';
 
 @Component({
   selector: 'app-create-modal',
+  standalone: true,
+  imports: [CommonModule, FormsModule, MatDialogModule],
   templateUrl: './create-modal.component.html',
   styleUrls: ['./create-modal.component.scss'],
 })
