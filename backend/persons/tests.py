@@ -53,9 +53,7 @@ class PersonModelTestCase(TestCase):
 
     def test_person_full_name_with_all_parts(self):
         """Test full_name() with first, middle, and last name."""
-        self.assertEqual(
-            self.person_with_full_name.full_name(), "Alice Marie Thompson"
-        )
+        self.assertEqual(self.person_with_full_name.full_name(), "Alice Marie Thompson")
 
     def test_person_full_name_without_middle(self):
         """Test full_name() without middle name."""
@@ -172,9 +170,7 @@ class PersonAPITestCase(TestCase):
 
     def test_create_person_valid_data(self):
         """Test POST request to create a new person with valid data."""
-        response = self.client.post(
-            "/api/person/", self.person_data, format="json"
-        )
+        response = self.client.post("/api/person/", self.person_data, format="json")
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(response.data["first_name"], "John")
         self.assertEqual(response.data["middle_name"], "Doe")
