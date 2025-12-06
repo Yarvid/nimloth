@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { CommonModule } from '@angular/common';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { CreateModalComponent } from '../create-modal/create-modal.component';
 import { AuthService } from '../auth.service';
@@ -7,6 +8,8 @@ import { IUser } from '../models';
 
 @Component({
   selector: 'app-navbar',
+  standalone: true,
+  imports: [CommonModule, MatDialogModule],
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss'],
 })
