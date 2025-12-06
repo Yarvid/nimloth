@@ -17,6 +17,7 @@
 .navbar-right {
   display: flex;
   align-items: center;
+  gap: 15px;
 }
 
 .user-account,
@@ -24,6 +25,42 @@
   margin-left: 10px;
   display: flex;
   align-items: center;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  padding: 6px 12px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+
+  .username {
+    font-size: 14px;
+    font-weight: 500;
+  }
+}
+
+.logout-button {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  font-family: "Montserrat" sans-serif;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+
+  i {
+    font-size: 20px;
+  }
 }
 
 .material-symbols-outlined {
