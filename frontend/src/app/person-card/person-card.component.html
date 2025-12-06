@@ -1,6 +1,9 @@
 <div class="person-card">
   <div class="card-header">
     <h3>{{ person.first_name }} {{ person.last_name }}</h3>
+    <button class="edit-button" (click)="onEdit()" title="Bearbeiten">
+      ✏️
+    </button>
   </div>
   <div class="card-body">
     <h5>Geburtsdatum: {{ person.date_of_birth }}</h5>

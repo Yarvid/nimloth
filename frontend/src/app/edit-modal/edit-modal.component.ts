@@ -1,42 +1,34 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
-import { MatDialogRef, MatDialogModule } from '@angular/material/dialog';
+import {
+  MAT_DIALOG_DATA,
+  MatDialogRef,
+  MatDialogModule,
+} from '@angular/material/dialog';
 import { IPerson } from '../models';
 import { PersonService } from '../person.service';
 
 @Component({
-  selector: 'app-create-modal',
+  selector: 'app-edit-modal',
   standalone: true,
   imports: [CommonModule, FormsModule, MatDialogModule],
-  templateUrl: './create-modal.component.html',
-  styleUrls: ['./create-modal.component.scss'],
+  templateUrl: './edit-modal.component.html',
+  styleUrls: ['./edit-modal.component.scss'],
 })
-export class CreateModalComponent implements OnInit {
+export class EditModalComponent implements OnInit {
   allPersons: IPerson[] = [];
   errorMessage = '';
   isLoading = false;
+  person: IPerson;
 
   constructor(
     private personService: PersonService,
-    public dialogRef: MatDialogRef<CreateModalComponent>,
-  ) {}
-
-  person: IPerson = {
-    first_name: '',
-    middle_name: '',
-    last_name: '',
-    birth_name: '',
-    artist_name: '',
-    date_of_birth: null,
-    place_of_birth: '',
-    date_of_death: null,
-    place_of_death: '',
-    cause_of_death: '',
-    mother: null,
-    father: null,
-    gender: 'U',
-  };
+    public dialogRef: MatDialogRef<EditModalComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: { person: IPerson },
+  ) {
+    this.person = { ...data.person };
+  }
 
   ngOnInit(): void {
     this.loadPersons();
@@ -45,7 +37,7 @@ export class CreateModalComponent implements OnInit {
   loadPersons(): void {
     this.personService.getAllPersons().subscribe({
       next: (persons) => {
-        this.allPersons = persons;
+        this.allPersons = persons.filter((p) => p.id !== this.person.id);
       },
       error: (error) => {
         console.error('Error loading persons:', error);
@@ -62,7 +54,8 @@ export class CreateModalComponent implements OnInit {
     this.isLoading = true;
     this.errorMessage = '';
 
-    const newPerson: IPerson = {
+    const updatedPerson: IPerson = {
+      id: this.person.id,
       first_name: form.value.firstName || '',
       middle_name: form.value.middleName || '',
       last_name: form.value.lastName || '',
@@ -78,15 +71,37 @@ export class CreateModalComponent implements OnInit {
       gender: form.value.gender || 'U',
     };
 
-    this.personService.createPerson(newPerson).subscribe({
+    this.personService.updatePerson(this.person.id!, updatedPerson).subscribe({
       next: (response) => {
-        console.log('Person created successfully!', response);
+        console.log('Person updated successfully!', response);
         this.dialogRef.close(response);
       },
       error: (error) => {
-        console.error('Error creating person:', error);
+        console.error('Error updating person:', error);
         this.errorMessage =
-          error.error?.detail || 'Failed to create person. Please try again.';
+          error.error?.detail || 'Failed to update person. Please try again.';
+        this.isLoading = false;
+      },
+    });
+  }
+
+  onDelete(): void {
+    if (!confirm('Are you sure you want to delete this person?')) {
+      return;
+    }
+
+    this.isLoading = true;
+    this.errorMessage = '';
+
+    this.personService.deletePerson(this.person.id!).subscribe({
+      next: () => {
+        console.log('Person deleted successfully!');
+        this.dialogRef.close({ deleted: true });
+      },
+      error: (error) => {
+        console.error('Error deleting person:', error);
+        this.errorMessage =
+          error.error?.detail || 'Failed to delete person. Please try again.';
         this.isLoading = false;
       },
     });

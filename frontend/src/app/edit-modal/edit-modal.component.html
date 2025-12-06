@@ -1,7 +1,7 @@
 <div class="modal">
   <div class="modal-content">
     <form #personForm="ngForm" (ngSubmit)="onSubmit(personForm)">
-      <h2>Neuen Verwandten anlegen</h2>
+      <h2>Person bearbeiten</h2>
 
       <div *ngIf="errorMessage" class="error-message">
         {{ errorMessage }}
@@ -14,7 +14,7 @@
             type="text"
             id="firstName"
             name="firstName"
-            ngModel
+            [(ngModel)]="person.first_name"
             required
             [disabled]="isLoading"
           />
@@ -26,7 +26,7 @@
             type="text"
             id="middleName"
             name="middleName"
-            ngModel
+            [(ngModel)]="person.middle_name"
             [disabled]="isLoading"
           />
         </div>
@@ -37,7 +37,7 @@
             type="text"
             id="lastName"
             name="lastName"
-            ngModel
+            [(ngModel)]="person.last_name"
             required
             [disabled]="isLoading"
           />
@@ -51,7 +51,7 @@
             type="text"
             id="birthName"
             name="birthName"
-            ngModel
+            [(ngModel)]="person.birth_name"
             [disabled]="isLoading"
           />
         </div>
@@ -62,14 +62,19 @@
             type="text"
             id="artistName"
             name="artistName"
-            ngModel
+            [(ngModel)]="person.artist_name"
             [disabled]="isLoading"
           />
         </div>
 
         <div class="form-group">
           <label for="gender">Geschlecht</label>
-          <select id="gender" name="gender" ngModel="U" [disabled]="isLoading">
+          <select
+            id="gender"
+            name="gender"
+            [(ngModel)]="person.gender"
+            [disabled]="isLoading"
+          >
             <option value="U">Unbekannt</option>
             <option value="M">Männlich</option>
             <option value="F">Weiblich</option>
@@ -85,7 +90,7 @@
             type="date"
             id="dob"
             name="dob"
-            ngModel
+            [(ngModel)]="person.date_of_birth"
             [disabled]="isLoading"
           />
         </div>
@@ -96,7 +101,7 @@
             type="text"
             id="pob"
             name="pob"
-            ngModel
+            [(ngModel)]="person.place_of_birth"
             [disabled]="isLoading"
           />
         </div>
@@ -109,7 +114,7 @@
             type="date"
             id="dod"
             name="dod"
-            ngModel
+            [(ngModel)]="person.date_of_death"
             [disabled]="isLoading"
           />
         </div>
@@ -120,7 +125,7 @@
             type="text"
             id="pod"
             name="pod"
-            ngModel
+            [(ngModel)]="person.place_of_death"
             [disabled]="isLoading"
           />
         </div>
@@ -133,7 +138,7 @@
             type="text"
             id="cod"
             name="cod"
-            ngModel
+            [(ngModel)]="person.cause_of_death"
             [disabled]="isLoading"
           />
         </div>
@@ -142,12 +147,17 @@
       <div class="row">
         <div class="form-group">
           <label for="mother">Mutter</label>
-          <select id="mother" name="mother" ngModel [disabled]="isLoading">
+          <select
+            id="mother"
+            name="mother"
+            [(ngModel)]="person.mother"
+            [disabled]="isLoading"
+          >
             <option [value]="null">-- Keine --</option>
-            <option *ngFor="let person of allPersons" [value]="person.id">
-              {{ person.first_name }} {{ person.last_name }}
-              <span *ngIf="person.date_of_birth">
-                ({{ person.date_of_birth | date: "yyyy" }})
+            <option *ngFor="let p of allPersons" [value]="p.id">
+              {{ p.first_name }} {{ p.last_name }}
+              <span *ngIf="p.date_of_birth">
+                ({{ p.date_of_birth | date: "yyyy" }})
               </span>
             </option>
           </select>
@@ -155,12 +165,17 @@
 
         <div class="form-group">
           <label for="father">Vater</label>
-          <select id="father" name="father" ngModel [disabled]="isLoading">
+          <select
+            id="father"
+            name="father"
+            [(ngModel)]="person.father"
+            [disabled]="isLoading"
+          >
             <option [value]="null">-- Keine --</option>
-            <option *ngFor="let person of allPersons" [value]="person.id">
-              {{ person.first_name }} {{ person.last_name }}
-              <span *ngIf="person.date_of_birth">
-                ({{ person.date_of_birth | date: "yyyy" }})
+            <option *ngFor="let p of allPersons" [value]="p.id">
+              {{ p.first_name }} {{ p.last_name }}
+              <span *ngIf="p.date_of_birth">
+                ({{ p.date_of_birth | date: "yyyy" }})
               </span>
             </option>
           </select>
@@ -173,7 +188,16 @@
           [disabled]="!personForm.valid || isLoading"
           class="btn-primary"
         >
-          {{ isLoading ? "Erstelle..." : "Person erstellen" }}
+          {{ isLoading ? "Speichern..." : "Speichern" }}
+        </button>
+
+        <button
+          type="button"
+          (click)="onDelete()"
+          [disabled]="isLoading"
+          class="btn-danger"
+        >
+          Löschen
         </button>
 
         <button

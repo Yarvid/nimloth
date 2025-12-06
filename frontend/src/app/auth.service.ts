@@ -40,11 +40,10 @@ export class AuthService {
 
   logout(): Observable<{ success: boolean; message: string }> {
     return this.http
-      .post<{ success: boolean; message: string }>(
-        `${this.apiUrl}/logout/`,
-        {},
-        { withCredentials: true },
-      )
+      .post<{
+        success: boolean;
+        message: string;
+      }>(`${this.apiUrl}/logout/`, {}, { withCredentials: true })
       .pipe(
         tap(() => {
           this.currentUserSubject.next(null);
