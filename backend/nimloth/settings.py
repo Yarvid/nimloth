@@ -149,3 +149,8 @@ SESSION_COOKIE_SAMESITE = None
 SESSION_COOKIE_SECURE = False  # Set to True in production with HTTPS
 CSRF_COOKIE_SAMESITE = None
 CSRF_COOKIE_SECURE = False  # Set to True in production with HTTPS
+
+# CSRF trusted origins for cross-origin requests
+CSRF_TRUSTED_ORIGINS = [
+    "http://localhost:4200",  # Angular frontend
+]
