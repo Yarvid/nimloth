@@ -286,6 +286,7 @@ class PersonSerializerTestCase(TestCase):
             "mother",
             "father",
             "gender",
+            "user_account",
         ]
         self.assertEqual(set(data.keys()), set(expected_fields))
 
