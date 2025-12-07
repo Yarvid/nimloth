@@ -13,18 +13,15 @@ import { filter } from 'rxjs/operators';
 })
 export class AppComponent {
   title = 'nimloth';
-  showNavbar = true;
+  showNavbar = false;
 
   constructor(private router: Router) {
-    // Check initial URL
-    this.showNavbar = !this.router.url.includes('/login');
-
     // Listen to navigation changes
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe((event: any) => {
-        // Hide navbar on login page
-        this.showNavbar = !event.url.includes('/login');
+        // Hide navbar on login page or root (which redirects to login)
+        this.showNavbar = !event.url.includes('/login') && event.url !== '/';
       });
   }
 }
