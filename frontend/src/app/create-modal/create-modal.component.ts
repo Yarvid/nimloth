@@ -49,8 +49,7 @@ export class CreateModalComponent implements OnInit {
       next: (persons) => {
         this.allPersons = persons;
       },
-      error: (error) => {
-        console.error('Error loading persons:', error);
+      error: () => {
         this.errorMessage = 'Failed to load persons for parent selection';
       },
     });
@@ -93,11 +92,9 @@ export class CreateModalComponent implements OnInit {
 
     this.personService.createPerson(newPerson).subscribe({
       next: (response) => {
-        console.log('Person created successfully!', response);
         this.dialogRef.close(response);
       },
       error: (error) => {
-        console.error('Error creating person:', error);
         this.errorMessage =
           error.error?.detail || 'Failed to create person. Please try again.';
         this.isLoading = false;

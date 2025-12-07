@@ -12,7 +12,8 @@
   <div class="navbar-right">
     <ng-container *ngIf="isAuthenticated">
       <!-- User info -->
-      <div class="user-info" *ngIf="currentUser">
+      <div class="user-info" *ngIf="currentUser" (click)="openAccountEdit()">
+        <i class="material-symbols-outlined">account_circle</i>
         <span class="username">{{ currentUser.username }}</span>
       </div>
       <!-- Logout button-->

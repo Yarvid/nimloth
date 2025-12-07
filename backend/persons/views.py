@@ -62,6 +62,24 @@ class PersonDetailView(APIView):
             )
 
 
+class CurrentUserPersonView(APIView):
+    def get(self, request, format=None):
+        if not request.user.is_authenticated:
+            return Response(
+                {"error": "Not authenticated"}, status=status.HTTP_401_UNAUTHORIZED
+            )
+
+        try:
+            person = Person.objects.get(user_account=request.user)
+            serializer = PersonSerializer(person)
+            return Response(serializer.data)
+        except Person.DoesNotExist:
+            return Response(
+                {"error": "No person associated with this user"},
+                status=status.HTTP_404_NOT_FOUND,
+            )
+
+
 def get_csrf_token(request):
     # FIXME: CSRF Cookie is not stored in Browser if set_cookie() is not used
     csrf_token = get_token(request)

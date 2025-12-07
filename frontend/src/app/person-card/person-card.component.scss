@@ -1,51 +1,90 @@
 .person-card {
-  background: rgb(241, 241, 241);
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   overflow: hidden;
-  transition: transform 0.2s;
-}
+  transition: all 0.3s ease;
+  font-family: "Montserrat", sans-serif;
 
-.person-card:hover {
-  transform: translateY(-5px);
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  }
 }
 
 .card-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  text-align: center;
-  padding: 5px 10px;
-  background: #819e81;
+  padding: 16px 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
 
   h3 {
     flex: 1;
     margin: 0;
+    font-size: 18px;
+    font-weight: 600;
   }
 
   .edit-button {
-    background: none;
-    border: none;
-    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    width: 36px;
+    height: 36px;
     cursor: pointer;
-    padding: 5px;
-    border-radius: 4px;
-    transition: background-color 0.2s;
+    transition: all 0.3s ease;
+    color: white;
+
+    i {
+      font-size: 20px;
+    }
 
     &:hover {
-      background-color: rgba(255, 255, 255, 0.2);
+      background-color: rgba(255, 255, 255, 0.25);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     }
 
     &:active {
-      background-color: rgba(255, 255, 255, 0.3);
+      transform: translateY(0);
     }
   }
 }
 
 .card-body {
-  padding: 10px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  .info-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #333;
+    font-size: 14px;
+
+    i {
+      color: #667eea;
+      font-size: 20px;
+    }
+
+    span {
+      flex: 1;
+      font-weight: 500;
+    }
+  }
 }
 
-.card-body h3 {
-  color: #333;
+.material-symbols-outlined {
+  font-variation-settings:
+    "FILL" 0,
+    "wght" 400,
+    "GRAD" 0,
+    "opsz" 48;
 }

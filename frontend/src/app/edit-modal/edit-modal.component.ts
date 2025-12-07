@@ -39,8 +39,7 @@ export class EditModalComponent implements OnInit {
       next: (persons) => {
         this.allPersons = persons.filter((p) => p.id !== this.person.id);
       },
-      error: (error) => {
-        console.error('Error loading persons:', error);
+      error: () => {
         this.errorMessage = 'Failed to load persons for parent selection';
       },
     });
@@ -73,11 +72,9 @@ export class EditModalComponent implements OnInit {
 
     this.personService.updatePerson(this.person.id!, updatedPerson).subscribe({
       next: (response) => {
-        console.log('Person updated successfully!', response);
         this.dialogRef.close(response);
       },
       error: (error) => {
-        console.error('Error updating person:', error);
         this.errorMessage =
           error.error?.detail || 'Failed to update person. Please try again.';
         this.isLoading = false;
@@ -95,11 +92,9 @@ export class EditModalComponent implements OnInit {
 
     this.personService.deletePerson(this.person.id!).subscribe({
       next: () => {
-        console.log('Person deleted successfully!');
         this.dialogRef.close({ deleted: true });
       },
       error: (error) => {
-        console.error('Error deleting person:', error);
         this.errorMessage =
           error.error?.detail || 'Failed to delete person. Please try again.';
         this.isLoading = false;
