@@ -1,8 +1,7 @@
-from datetime import date, datetime
+from datetime import date
 
 from dateutil.relativedelta import relativedelta
 from django.test import TestCase
-from django.urls import reverse
 from persons.models import Person
 from rest_framework import status
 from rest_framework.test import APIClient
@@ -135,7 +134,6 @@ class PersonModelTestCase(TestCase):
     def test_person_modified_on_auto_updates(self):
         """Test that modified_on updates automatically."""
         person = Person.objects.create(first_name="UpdateTest", gender="U")
-        original_modified = person.modified_on
         person.first_name = "Updated"
         person.save()
         self.assertIsNotNone(person.modified_on)

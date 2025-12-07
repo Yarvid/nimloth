@@ -62,6 +62,12 @@ class Person(models.Model):
         related_name="modified_persons",
     )
 
+    def __str__(self):
+        """
+        Returns a string representation of the person.
+        """
+        return self.full_name() or f"Person {self.id}"
+
     def full_name(self):
         """
         Returns the full name of a person.
