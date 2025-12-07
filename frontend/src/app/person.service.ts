@@ -42,4 +42,8 @@ export class PersonService {
       }),
     );
   }
+
+  getCurrentUserPerson(): Observable<IPerson> {
+    return this.http.get<IPerson>(`${this.apiUrl}me/`);
+  }
 }

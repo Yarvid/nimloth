@@ -18,12 +18,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from persons.auth_views import check_auth, login_view, logout_view
-from persons.views import PersonCreateView, PersonDetailView
+from persons.views import PersonCreateView, PersonDetailView, CurrentUserPersonView
 from rest_framework.urlpatterns import format_suffix_patterns
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/person/", PersonCreateView.as_view()),
+    path("api/person/me/", CurrentUserPersonView.as_view()),
     path("api/person/<int:pk>/", PersonDetailView.as_view()),
     path("api/auth/login/", login_view, name="login"),
     path("api/auth/logout/", logout_view, name="logout"),
