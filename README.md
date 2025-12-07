@@ -93,6 +93,14 @@ npm start
 
 ## Development
 
+### Documentation
+
+All project documentation is organized in the [`docs/`](./docs) directory:
+
+- **[docs/CLAUDE.md](./docs/CLAUDE.md)** - Comprehensive AI assistant guide and project overview
+- **[docs/TESTING.md](./docs/TESTING.md)** - Complete testing documentation (44 tests)
+- **[docs/README.md](./docs/README.md)** - Documentation index and navigation
+
 ### Project Structure
 
 ```
@@ -102,6 +110,10 @@ nimloth/
 │   └── nimloth/       # Django project configuration
 ├── frontend/          # Angular application
 │   └── src/app/       # Components, services, models
+├── docs/              # Project documentation
+│   ├── CLAUDE.md      # AI assistant guide
+│   ├── TESTING.md     # Test documentation
+│   └── README.md      # Docs index
 ├── .devcontainer/     # VSCode Dev Container config
 ├── .github/           # CI/CD workflows
 └── docker-compose.yml # Multi-container orchestration
@@ -177,7 +189,7 @@ Helper methods: `full_name()`, `time_since_birth()`, `time_since_death()`
 
 ## Contributing
 
-We welcome contributions! Please see [CLAUDE.md](CLAUDE.md) for detailed development guidelines.
+We welcome contributions! Please see [docs/CLAUDE.md](./docs/CLAUDE.md) for detailed development guidelines.
 
 ### Development Setup
 
@@ -238,7 +250,8 @@ This project is currently unlicensed. Please contact the repository owner for us
 
 For questions or issues:
 - Open an issue on [GitHub Issues](https://github.com/Yarvid/nimloth/issues)
-- See [CLAUDE.md](CLAUDE.md) for AI assistant guidance
+- See [docs/CLAUDE.md](./docs/CLAUDE.md) for AI assistant guidance
+- See [docs/TESTING.md](./docs/TESTING.md) for testing help
 - Check [GitHub Discussions](https://github.com/Yarvid/nimloth/discussions) for community support
 
 ---

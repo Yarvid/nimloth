@@ -47,9 +47,7 @@ def login_view(request):
                 status=200,
             )
         else:
-            return JsonResponse(
-                {"error": "Invalid username or password"}, status=401
-            )
+            return JsonResponse({"error": "Invalid username or password"}, status=401)
 
     except json.JSONDecodeError:
         return JsonResponse({"error": "Invalid JSON"}, status=400)

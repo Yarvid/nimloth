@@ -1,0 +1,56 @@
+name: Frontend CI
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+    branches: ["**"]
+
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: ["20.x"]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Cache node modules
+        uses: actions/cache@v3
+        with:
+          path: frontend/node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('frontend/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install dependencies
+        working-directory: ./frontend
+        run: |
+          npm ci
+
+      - name: Run Prettier (code formatting check)
+        working-directory: ./frontend
+        run: |
+          npx prettier --check "src/**/*.{ts,js,css,scss,html}"
+
+      - name: Run ESLint (linting)
+        working-directory: ./frontend
+        run: |
+          npm run lint
+
+      - name: Run Angular tests
+        working-directory: ./frontend
+        run: |
+          npm run test -- --watch=false --browsers=ChromeHeadless
+
+      - name: Build production bundle
+        working-directory: ./frontend
+        run: |
+          npm run build

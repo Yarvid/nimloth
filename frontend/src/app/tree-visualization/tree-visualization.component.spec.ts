@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TreeVisualizationComponent } from './tree-visualization.component';
 
 describe('TreeVisualizationComponent', () => {
@@ -8,7 +8,7 @@ describe('TreeVisualizationComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [TreeVisualizationComponent],
+      imports: [TreeVisualizationComponent, HttpClientTestingModule],
     });
     fixture = TestBed.createComponent(TreeVisualizationComponent);
     component = fixture.componentInstance;
