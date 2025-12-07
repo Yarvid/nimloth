@@ -13,12 +13,9 @@ import { filter } from 'rxjs/operators';
 })
 export class AppComponent {
   title = 'nimloth';
-  showNavbar = true;
+  showNavbar = false;
 
   constructor(private router: Router) {
-    // Check initial URL
-    this.showNavbar = !this.router.url.includes('/login');
-
     // Listen to navigation changes
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
