@@ -190,7 +190,7 @@ describe('PersonService', () => {
   describe('deletePerson', () => {
     it('should delete a person via DELETE request', () => {
       service.deletePerson(1).subscribe((response) => {
-        expect(response).toBeUndefined();
+        expect(response).toBeNull();
       });
 
       const req = httpMock.expectOne(`${apiUrl}1/`);
