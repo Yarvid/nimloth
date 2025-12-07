@@ -2,6 +2,15 @@
 
 export type Gender = 'M' | 'F' | 'N' | 'U';
 
+export interface IUserAccount {
+  id?: number;
+  username: string;
+  email: string;
+  first_name: string;
+  last_name: string;
+  password?: string; // Only used when creating/updating
+}
+
 export interface IPerson {
   id?: number;
   first_name: string;
@@ -17,4 +26,5 @@ export interface IPerson {
   mother: number | null;
   father: number | null;
   gender: Gender;
+  user_account?: IUserAccount | null;
 }

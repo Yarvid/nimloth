@@ -1,6 +1,7 @@
 from datetime import date, datetime
 
 from dateutil.relativedelta import relativedelta
+from django.contrib.auth.models import User
 from django.db import models
 
 
@@ -43,6 +44,15 @@ class Person(models.Model):
             ("U", "Unspecified"),
         ],
         default="U",
+    )
+    # --- User Account ---
+    user_account = models.OneToOneField(
+        User,
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        related_name="person",
+        help_text="Associated user account for login access",
     )
     # --- Modifictation log ---
     created_on = models.DateField(auto_now_add=True, null=True)

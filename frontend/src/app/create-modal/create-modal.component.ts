@@ -16,6 +16,7 @@ export class CreateModalComponent implements OnInit {
   allPersons: IPerson[] = [];
   errorMessage = '';
   isLoading = false;
+  createAccount = false;
 
   constructor(
     private personService: PersonService,
@@ -36,6 +37,7 @@ export class CreateModalComponent implements OnInit {
     mother: null,
     father: null,
     gender: 'U',
+    user_account: null,
   };
 
   ngOnInit(): void {
@@ -77,6 +79,17 @@ export class CreateModalComponent implements OnInit {
       father: form.value.father ? Number(form.value.father) : null,
       gender: form.value.gender || 'U',
     };
+
+    // Add user account if checkbox is checked
+    if (this.createAccount) {
+      newPerson.user_account = {
+        username: form.value.username || '',
+        email: form.value.email || '',
+        first_name: form.value.firstName || '',
+        last_name: form.value.lastName || '',
+        password: form.value.password || '',
+      };
+    }
 
     this.personService.createPerson(newPerson).subscribe({
       next: (response) => {
