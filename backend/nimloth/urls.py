@@ -18,7 +18,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from persons.auth_views import check_auth, login_view, logout_view
-from persons.views import PersonCreateView, PersonDetailView, CurrentUserPersonView
+from persons.views import CurrentUserPersonView, PersonCreateView, PersonDetailView
 from rest_framework.urlpatterns import format_suffix_patterns
 
 urlpatterns = [

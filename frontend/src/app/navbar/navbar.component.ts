@@ -41,8 +41,10 @@ export class NavbarComponent {
         });
       },
       error: () => {
-        alert('Could not load your account information. You may not have a person record associated with your account.');
-      }
+        alert(
+          'Could not load your account information. You may not have a person record associated with your account.',
+        );
+      },
     });
   }
 
@@ -54,7 +56,7 @@ export class NavbarComponent {
       error: () => {
         // Force navigation to login even if logout fails
         this.router.navigate(['/login']);
-      }
+      },
     });
   }
 

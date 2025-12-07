@@ -76,7 +76,7 @@ class CurrentUserPersonView(APIView):
         except Person.DoesNotExist:
             return Response(
                 {"error": "No person associated with this user"},
-                status=status.HTTP_404_NOT_FOUND
+                status=status.HTTP_404_NOT_FOUND,
             )
 
 
