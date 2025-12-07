@@ -19,9 +19,11 @@ export class AppComponent {
     // Listen to navigation changes
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
-      .subscribe((event: any) => {
+      .subscribe((event) => {
         // Hide navbar on login page or root (which redirects to login)
-        this.showNavbar = !event.url.includes('/login') && event.url !== '/';
+        if (event instanceof NavigationEnd) {
+          this.showNavbar = !event.url.includes('/login') && event.url !== '/';
+        }
       });
   }
 }

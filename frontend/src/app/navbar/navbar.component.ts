@@ -36,18 +36,11 @@ export class NavbarComponent {
   openAccountEdit(): void {
     this.personService.getCurrentUserPerson().subscribe({
       next: (person) => {
-        const dialogRef = this.dialog.open(EditModalComponent, {
+        this.dialog.open(EditModalComponent, {
           data: { person },
         });
-
-        dialogRef.afterClosed().subscribe((result) => {
-          if (result) {
-            console.log('Person updated:', result);
-          }
-        });
       },
-      error: (error) => {
-        console.error('Error fetching current user person:', error);
+      error: () => {
         alert('Could not load your account information. You may not have a person record associated with your account.');
       }
     });
@@ -58,8 +51,7 @@ export class NavbarComponent {
       next: () => {
         this.router.navigate(['/login']);
       },
-      error: (error) => {
-        console.error('Error during logout:', error);
+      error: () => {
         // Force navigation to login even if logout fails
         this.router.navigate(['/login']);
       }
