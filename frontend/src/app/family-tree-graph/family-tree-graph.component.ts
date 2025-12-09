@@ -146,7 +146,7 @@ export class FamilyTreeGraphComponent
         {
           selector: 'node',
           style: {
-            'background-color': '#4CAF50',
+            'background-color': '#667eea',
             label: 'data(label)',
             'text-valign': 'center',
             'text-halign': 'center',
@@ -157,7 +157,7 @@ export class FamilyTreeGraphComponent
             height: 80,
             shape: 'roundrectangle',
             'border-width': 2,
-            'border-color': '#2E7D32',
+            'border-color': '#5568d3',
             'text-wrap': 'wrap',
             'text-max-width': '110px',
           },
@@ -165,23 +165,20 @@ export class FamilyTreeGraphComponent
         {
           selector: 'node.current-user',
           style: {
-            'background-color': '#2196F3',
-            'border-color': '#1565C0',
-            'border-width': 3,
+            'border-color': '#764ba2',
+            'border-width': 4,
+            'background-color': '#764ba2',
           },
         },
         {
-          selector: 'node.female',
+          selector: 'node.marriage-node',
           style: {
-            'background-color': '#E91E63',
-            'border-color': '#AD1457',
-          },
-        },
-        {
-          selector: 'node.male',
-          style: {
-            'background-color': '#2196F3',
-            'border-color': '#1565C0',
+            width: 8,
+            height: 8,
+            'background-color': '#999',
+            'border-width': 0,
+            label: '',
+            shape: 'ellipse',
           },
         },
         {
@@ -194,31 +191,18 @@ export class FamilyTreeGraphComponent
             'curve-style': 'bezier',
           },
         },
-        {
-          selector: 'edge.mother',
-          style: {
-            'line-color': '#E91E63',
-            'target-arrow-color': '#E91E63',
-          },
-        },
-        {
-          selector: 'edge.father',
-          style: {
-            'line-color': '#2196F3',
-            'target-arrow-color': '#2196F3',
-          },
-        },
       ],
       layout: {
         name: 'breadthfirst',
         directed: true,
-        spacingFactor: 1.5,
+        spacingFactor: 1.75,
         avoidOverlap: true,
         nodeDimensionsIncludeLabels: true,
       },
       userZoomingEnabled: true,
       userPanningEnabled: true,
       boxSelectionEnabled: false,
+      autoungrabify: true,
     });
 
     // Add click event to show person details
@@ -243,24 +227,29 @@ export class FamilyTreeGraphComponent
     // Get family members related to current user
     const familyMembers = this.getFamilyMembers();
 
+    // Track children with both parents for edge merging
+    const childrenWithBothParents = new Map<number, { mother: number; father: number }>();
+
+    familyMembers.forEach((person) => {
+      if (person.id && person.mother && person.father) {
+        childrenWithBothParents.set(person.id, {
+          mother: person.mother,
+          father: person.father,
+        });
+      }
+    });
+
     // Build nodes for each family member
     familyMembers.forEach((person) => {
       const label = this.getPersonLabel(person);
-      const nodeClasses: string[] = [];
-
-      // Add gender class
-      if (person.gender === 'F') {
-        nodeClasses.push('female');
-      } else if (person.gender === 'M') {
-        nodeClasses.push('male');
-      }
+      const classes: string[] = [];
 
       // Mark current user
       if (
         this.currentUserPerson &&
         person.id === this.currentUserPerson.id
       ) {
-        nodeClasses.push('current-user');
+        classes.push('current-user');
       }
 
       nodes.push({
@@ -269,29 +258,83 @@ export class FamilyTreeGraphComponent
           person: person,
           label: label,
         },
-      });
+        classes: classes.join(' '),
+      } as any);
+    });
 
-      // Add edges for parent relationships
-      if (person.mother) {
+    // Create edges with merging logic for children with both parents
+    familyMembers.forEach((person) => {
+      if (!person.id) return;
+
+      const hasBothParents = person.mother && person.father;
+
+      if (hasBothParents) {
+        // Create a virtual marriage node
+        const marriageNodeId = `marriage-${person.mother}-${person.father}`;
+
+        // Check if marriage node already exists
+        if (!nodes.find((n: any) => n.data.id === marriageNodeId)) {
+          nodes.push({
+            data: {
+              id: marriageNodeId,
+              label: '',
+            },
+            classes: 'marriage-node',
+          } as any);
+
+          // Edge from mother to marriage node
+          edges.push({
+            data: {
+              id: `edge-mother-${person.mother}-to-marriage-${marriageNodeId}`,
+              source: `person-${person.mother}`,
+              target: marriageNodeId,
+              type: 'mother',
+            },
+          });
+
+          // Edge from father to marriage node
+          edges.push({
+            data: {
+              id: `edge-father-${person.father}-to-marriage-${marriageNodeId}`,
+              source: `person-${person.father}`,
+              target: marriageNodeId,
+              type: 'father',
+            },
+          });
+        }
+
+        // Edge from marriage node to child
         edges.push({
           data: {
-            id: `edge-${person.id}-mother-${person.mother}`,
-            source: `person-${person.mother}`,
+            id: `edge-marriage-${marriageNodeId}-to-child-${person.id}`,
+            source: marriageNodeId,
             target: `person-${person.id}`,
             type: 'mother',
           },
         });
-      }
+      } else {
+        // Single parent edges (original behavior)
+        if (person.mother) {
+          edges.push({
+            data: {
+              id: `edge-${person.id}-mother-${person.mother}`,
+              source: `person-${person.mother}`,
+              target: `person-${person.id}`,
+              type: 'mother',
+            },
+          });
+        }
 
-      if (person.father) {
-        edges.push({
-          data: {
-            id: `edge-${person.id}-father-${person.father}`,
-            source: `person-${person.father}`,
-            target: `person-${person.id}`,
-            type: 'father',
-          },
-        });
+        if (person.father) {
+          edges.push({
+            data: {
+              id: `edge-${person.id}-father-${person.father}`,
+              source: `person-${person.father}`,
+              target: `person-${person.id}`,
+              type: 'father',
+            },
+          });
+        }
       }
     });
 
