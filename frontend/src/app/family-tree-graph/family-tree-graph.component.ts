@@ -193,11 +193,7 @@ export class FamilyTreeGraphComponent
         },
       ],
       layout: {
-        name: 'breadthfirst',
-        directed: true,
-        spacingFactor: 1.75,
-        avoidOverlap: true,
-        nodeDimensionsIncludeLabels: true,
+        name: 'preset',
       },
       userZoomingEnabled: true,
       userPanningEnabled: true,
@@ -205,18 +201,24 @@ export class FamilyTreeGraphComponent
       autoungrabify: true,
     });
 
-    // Add click event to show person details
+    // Add click event to show person details (only for person nodes, not marriage nodes)
     this.cy.on('tap', 'node', (event) => {
       const node = event.target as NodeSingular;
       const person = node.data('person') as IPerson;
-      this.openEditModal(person);
+      // Only open modal if this is a real person node
+      if (person && person.id) {
+        this.openEditModal(person);
+      }
     });
 
-    // Add context menu for adding relatives (we'll implement this in next iteration)
+    // Add context menu for adding relatives (only for person nodes)
     this.cy.on('cxttap', 'node', (event) => {
       const node = event.target as NodeSingular;
       const person = node.data('person') as IPerson;
-      this.showAddRelativeMenu(person, event);
+      // Only show menu if this is a real person node
+      if (person && person.id) {
+        this.showAddRelativeMenu(person, event);
+      }
     });
   }
 
@@ -226,6 +228,9 @@ export class FamilyTreeGraphComponent
 
     // Get family members related to current user
     const familyMembers = this.getFamilyMembers();
+
+    // Calculate generations for each person
+    const generations = this.calculateGenerations(familyMembers);
 
     // Track children with both parents for edge merging
     const childrenWithBothParents = new Map<number, { mother: number; father: number }>();
@@ -238,6 +243,9 @@ export class FamilyTreeGraphComponent
         });
       }
     });
+
+    // Calculate positions for each person based on generation
+    const positions = this.calculatePositions(familyMembers, generations);
 
     // Build nodes for each family member
     familyMembers.forEach((person) => {
@@ -252,12 +260,15 @@ export class FamilyTreeGraphComponent
         classes.push('current-user');
       }
 
+      const position = positions.get(person.id!);
+
       nodes.push({
         data: {
           id: `person-${person.id}`,
           person: person,
           label: label,
         },
+        position: position,
         classes: classes.join(' '),
       } as any);
     });
@@ -274,11 +285,19 @@ export class FamilyTreeGraphComponent
 
         // Check if marriage node already exists
         if (!nodes.find((n: any) => n.data.id === marriageNodeId)) {
+          // Calculate marriage node position (between the two parents)
+          const motherPos = positions.get(person.mother!);
+          const fatherPos = positions.get(person.father!);
+          const marriagePos = motherPos && fatherPos
+            ? { x: (motherPos.x + fatherPos.x) / 2, y: (motherPos.y + fatherPos.y) / 2 }
+            : undefined;
+
           nodes.push({
             data: {
               id: marriageNodeId,
               label: '',
             },
+            position: marriagePos,
             classes: 'marriage-node',
           } as any);
 
@@ -410,6 +429,102 @@ export class FamilyTreeGraphComponent
     }
 
     return label;
+  }
+
+  private calculateGenerations(familyMembers: IPerson[]): Map<number, number> {
+    const generations = new Map<number, number>();
+
+    if (!this.currentUserPerson || !this.currentUserPerson.id) {
+      // If no current user, assign generation 0 to all
+      familyMembers.forEach(p => {
+        if (p.id) generations.set(p.id, 0);
+      });
+      return generations;
+    }
+
+    // Current user is generation 0
+    generations.set(this.currentUserPerson.id, 0);
+
+    // BFS to assign generations
+    const queue: { id: number; generation: number }[] = [
+      { id: this.currentUserPerson.id, generation: 0 }
+    ];
+    const visited = new Set<number>();
+
+    while (queue.length > 0) {
+      const { id, generation } = queue.shift()!;
+
+      if (visited.has(id)) continue;
+      visited.add(id);
+
+      const person = familyMembers.find(p => p.id === id);
+      if (!person) continue;
+
+      // Parents are one generation up (positive)
+      if (person.mother && !visited.has(person.mother)) {
+        generations.set(person.mother, generation + 1);
+        queue.push({ id: person.mother, generation: generation + 1 });
+      }
+      if (person.father && !visited.has(person.father)) {
+        generations.set(person.father, generation + 1);
+        queue.push({ id: person.father, generation: generation + 1 });
+      }
+
+      // Children are one generation down (negative)
+      familyMembers.forEach(p => {
+        if (p.id && !visited.has(p.id) && (p.mother === id || p.father === id)) {
+          generations.set(p.id, generation - 1);
+          queue.push({ id: p.id, generation: generation - 1 });
+        }
+      });
+    }
+
+    return generations;
+  }
+
+  private calculatePositions(
+    familyMembers: IPerson[],
+    generations: Map<number, number>
+  ): Map<number, { x: number; y: number }> {
+    const positions = new Map<number, { x: number; y: number }>();
+
+    // Group people by generation
+    const generationGroups = new Map<number, IPerson[]>();
+    familyMembers.forEach(person => {
+      if (!person.id) return;
+      const gen = generations.get(person.id) || 0;
+      if (!generationGroups.has(gen)) {
+        generationGroups.set(gen, []);
+      }
+      generationGroups.get(gen)!.push(person);
+    });
+
+    // Layout parameters
+    const horizontalSpacing = 200;
+    const verticalSpacing = 150;
+
+    // Position each generation
+    generationGroups.forEach((people, gen) => {
+      const numPeople = people.length;
+      const totalWidth = (numPeople - 1) * horizontalSpacing;
+      const startX = -totalWidth / 2;
+
+      // Generation 0 (current user) is at y=0
+      // Positive generations (parents) go up (negative y)
+      // Negative generations (children) go down (positive y)
+      const y = -gen * verticalSpacing;
+
+      people.forEach((person, index) => {
+        if (person.id) {
+          positions.set(person.id, {
+            x: startX + index * horizontalSpacing,
+            y: y
+          });
+        }
+      });
+    });
+
+    return positions;
   }
 
   private openEditModal(person: IPerson): void {
