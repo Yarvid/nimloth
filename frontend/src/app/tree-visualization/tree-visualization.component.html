@@ -1,15 +1,23 @@
 <div class="tree-container">
-  <div *ngIf="loading" class="loading">Loading view...</div>
+  <!-- Grid View -->
+  <div *ngIf="currentViewMode === 'grid'" class="grid-view">
+    <div *ngIf="loading" class="loading">Loading view...</div>
 
-  <div *ngIf="error" , class="error">
-    {{ error }}
+    <div *ngIf="error" class="error">
+      {{ error }}
+    </div>
+
+    <div class="cards-grid" *ngIf="!loading && !error">
+      <app-person-card
+        *ngFor="let person of persons"
+        [person]="person"
+        (editPerson)="openEditModal($event)"
+      ></app-person-card>
+    </div>
   </div>
 
-  <div class="cards-grid" *ngIf="!loading && !error">
-    <app-person-card
-      *ngFor="let person of persons"
-      [person]="person"
-      (editPerson)="openEditModal($event)"
-    ></app-person-card>
+  <!-- Graph View -->
+  <div *ngIf="currentViewMode === 'graph'" class="graph-view">
+    <app-family-tree-graph></app-family-tree-graph>
   </div>
 </div>

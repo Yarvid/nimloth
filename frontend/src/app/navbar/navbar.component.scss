@@ -12,6 +12,7 @@
 .navbar-left {
   display: flex;
   align-items: center;
+  gap: 16px;
 
   i {
     font-size: 28px;
@@ -20,6 +21,45 @@
 
     &:hover {
       transform: scale(1.1);
+    }
+  }
+}
+
+.view-toggle {
+  ::ng-deep {
+    .mat-button-toggle-group {
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .mat-button-toggle {
+      border: none;
+      background-color: rgba(255, 255, 255, 0.15);
+      color: white;
+      font-family: "Montserrat", sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+
+      .mat-button-toggle-label-content {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        padding: 4px 12px;
+
+        i {
+          font-size: 18px;
+        }
+      }
+
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.25);
+      }
+
+      &.mat-button-toggle-checked {
+        background-color: rgba(255, 255, 255, 0.35);
+        font-weight: 600;
+      }
     }
   }
 }

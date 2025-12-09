@@ -1,9 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject, Optional } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
-import { MatDialogRef, MatDialogModule } from '@angular/material/dialog';
+import {
+  MatDialogRef,
+  MatDialogModule,
+  MAT_DIALOG_DATA,
+} from '@angular/material/dialog';
 import { IPerson } from '../models';
 import { PersonService } from '../person.service';
+
+export interface CreatePersonData {
+  mother?: number | null;
+  father?: number | null;
+  relationshipType?: 'child' | 'mother' | 'father';
+  relatedPersonId?: number;
+}
 
 @Component({
   selector: 'app-create-modal',
@@ -21,6 +32,7 @@ export class CreateModalComponent implements OnInit {
   constructor(
     private personService: PersonService,
     public dialogRef: MatDialogRef<CreateModalComponent>,
+    @Optional() @Inject(MAT_DIALOG_DATA) public data?: CreatePersonData,
   ) {}
 
   person: IPerson = {
@@ -42,6 +54,16 @@ export class CreateModalComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadPersons();
+
+    // Pre-fill relationship data if provided
+    if (this.data) {
+      if (this.data.mother !== undefined) {
+        this.person.mother = this.data.mother;
+      }
+      if (this.data.father !== undefined) {
+        this.person.father = this.data.father;
+      }
+    }
   }
 
   loadPersons(): void {

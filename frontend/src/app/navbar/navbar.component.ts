@@ -1,31 +1,41 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { Router } from '@angular/router';
 import { CreateModalComponent } from '../create-modal/create-modal.component';
 import { EditModalComponent } from '../edit-modal/edit-modal.component';
 import { AuthService } from '../auth.service';
 import { PersonService } from '../person.service';
+import { ViewStateService, ViewMode } from '../view-state.service';
 import { IUser } from '../models';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [CommonModule, MatDialogModule],
+  imports: [CommonModule, MatDialogModule, MatButtonToggleModule],
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss'],
 })
-export class NavbarComponent {
+export class NavbarComponent implements OnInit {
   currentUser: IUser | null = null;
+  currentViewMode: ViewMode = 'grid';
 
   constructor(
     public dialog: MatDialog,
     private authService: AuthService,
     private personService: PersonService,
+    private viewStateService: ViewStateService,
     private router: Router,
   ) {
     this.authService.currentUser.subscribe((user) => {
       this.currentUser = user;
+    });
+  }
+
+  ngOnInit(): void {
+    this.viewStateService.viewMode$.subscribe((mode) => {
+      this.currentViewMode = mode;
     });
   }
 
@@ -58,6 +68,10 @@ export class NavbarComponent {
         this.router.navigate(['/login']);
       },
     });
+  }
+
+  onViewModeChange(mode: ViewMode): void {
+    this.viewStateService.setViewMode(mode);
   }
 
   get isAuthenticated(): boolean {

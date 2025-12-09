@@ -1,0 +1,30 @@
+<div class="graph-container">
+  <div *ngIf="loading" class="loading">Loading family tree...</div>
+  <div *ngIf="error" class="error">{{ error }}</div>
+  <div #cyContainer class="cy-container" *ngIf="!loading && !error"></div>
+
+  <!-- Context Menu for Adding Relatives -->
+  <div
+    *ngIf="showContextMenu && selectedPerson"
+    class="context-menu"
+    [style.left.px]="contextMenuPosition.x"
+    [style.top.px]="contextMenuPosition.y"
+    (click)="$event.stopPropagation()"
+  >
+    <div class="context-menu-header">
+      <strong>{{ selectedPerson.first_name }} {{ selectedPerson.last_name }}</strong>
+    </div>
+    <button mat-menu-item (click)="addMother()" *ngIf="!selectedPerson.mother">
+      <i class="material-symbols-outlined">add</i>
+      <span>Add Mother</span>
+    </button>
+    <button mat-menu-item (click)="addFather()" *ngIf="!selectedPerson.father">
+      <i class="material-symbols-outlined">add</i>
+      <span>Add Father</span>
+    </button>
+    <button mat-menu-item (click)="addChild()">
+      <i class="material-symbols-outlined">add</i>
+      <span>Add Child</span>
+    </button>
+  </div>
+</div>

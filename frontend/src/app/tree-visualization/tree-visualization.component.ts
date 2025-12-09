@@ -5,23 +5,34 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { PersonService } from '../person.service';
 import { PersonCardComponent } from '../person-card/person-card.component';
 import { EditModalComponent } from '../edit-modal/edit-modal.component';
+import { FamilyTreeGraphComponent } from '../family-tree-graph/family-tree-graph.component';
+import { ViewStateService, ViewMode } from '../view-state.service';
 import { IPerson } from '../models';
 
 @Component({
   selector: 'app-tree-visualization',
   templateUrl: './tree-visualization.component.html',
   styleUrls: ['./tree-visualization.component.scss'],
-  imports: [PersonCardComponent, NgIf, NgFor, MatDialogModule],
+  imports: [
+    PersonCardComponent,
+    FamilyTreeGraphComponent,
+    NgIf,
+    NgFor,
+    MatDialogModule,
+  ],
   standalone: true,
 })
 export class TreeVisualizationComponent implements OnInit, OnDestroy {
   persons: IPerson[] = [];
   loading = false;
   error: string | null = null;
+  currentViewMode: ViewMode = 'grid';
   private personCreatedSubscription?: Subscription;
+  private viewModeSubscription?: Subscription;
 
   constructor(
     private personService: PersonService,
+    private viewStateService: ViewStateService,
     public dialog: MatDialog,
   ) {}
 
@@ -32,11 +43,20 @@ export class TreeVisualizationComponent implements OnInit, OnDestroy {
       this.personService.personCreated$.subscribe(() => {
         this.loadPersons();
       });
+
+    this.viewModeSubscription = this.viewStateService.viewMode$.subscribe(
+      (mode) => {
+        this.currentViewMode = mode;
+      },
+    );
   }
 
   ngOnDestroy(): void {
     if (this.personCreatedSubscription) {
       this.personCreatedSubscription.unsubscribe();
+    }
+    if (this.viewModeSubscription) {
+      this.viewModeSubscription.unsubscribe();
     }
   }
 

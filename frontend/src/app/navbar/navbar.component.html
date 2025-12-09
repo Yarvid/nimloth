@@ -2,6 +2,22 @@
   <div class="navbar-left">
     <!-- Icon on the left-->
     <i class="material-symbols-outlined">home</i>
+    <!-- View toggle -->
+    <mat-button-toggle-group
+      *ngIf="isAuthenticated"
+      [value]="currentViewMode"
+      (change)="onViewModeChange($event.value)"
+      class="view-toggle"
+    >
+      <mat-button-toggle value="grid">
+        <i class="material-symbols-outlined">grid_view</i>
+        Grid
+      </mat-button-toggle>
+      <mat-button-toggle value="graph">
+        <i class="material-symbols-outlined">account_tree</i>
+        Graph
+      </mat-button-toggle>
+    </mat-button-toggle-group>
   </div>
   <div class="navbar-middle">
     <!-- Create button -->
